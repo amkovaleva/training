@@ -1,0 +1,116 @@
+$main-text-color: #002350;
+$scd-text-color: #5A0044;
+$color-wrong: #8B0068;
+$color-wrong-dark: #681A55;
+$color-right: #87B300;
+$color-right-dark: #587400;
+$color-light: #c8cfac;
+
+@font-face {
+  font-family: "Lobster-Regular";
+  src: url(/styles/fonts/Lobster-Regular.ttf) format("opentype");
+}
+
+@font-face {
+  font-family: "Kurale-Regular";
+  src: url(/styles/fonts/Kurale-Regular.ttf) format("opentype");
+}
+
+$title-font: Lobster-Regular, 'Times New Roman', serif;
+$number-font: Kurale-Regular, 'Times New Roman', serif;
+$base-font: Helvetica, Sans-serif;
+
+h1{
+  margin: 100px 0;
+  font: 70px $title-font;
+  text-align: center;
+  color: $scd-text-color;
+}
+#app{
+  max-width: 800px;
+  margin: 0 auto;
+}
+.menu{
+  a{
+    display: block;
+    margin: 20px 0;
+    padding: 25px;
+    border: 2px solid $color-right-dark;
+    background: $color-light;
+    font: 25px $title-font;
+    color: $scd-text-color;
+    span{
+      display: inline-block;
+      &:first-child{
+        font-size: 30px;
+        width: 60%;
+        &:first-letter{
+          padding-right: 35px;
+          font-size: 50px;
+          line-height: 50px;
+          font-weight: bold;
+        }
+      }
+      &:last-child{
+        width: 40%;
+        font: 25px $number-font;
+        color: $main-text-color;
+        text-align: right;
+      }
+    }
+    &:hover{
+      opacity: .9;
+      cursor: pointer;
+      span{
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.btn{
+  display: block;
+  max-width: 200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: $color-right;
+  border: 2px solid $color-right-dark;
+  font: 25px $title-font;
+  color: $scd-text-color;
+  text-align: center;
+  &:hover{
+    opacity: .9;
+    cursor: pointer;
+  }
+}
+.count-down{
+  display: block;
+  padding: 20px;
+  background: $color-right;
+  border: 2px solid $color-right-dark;
+  color: $main-text-color;
+  text-align: center;
+  &.prepare{
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 200px;
+    font: 115px $number-font;
+    line-height: 200px;
+
+  }
+  &.started{
+    width: 100px;
+    float: right;
+    font: 25px $number-font;
+  }
+}
+
+.info{
+  font: 25px $number-font;
+  color: $main-text-color;
+  text-align: center;
+  br{
+
+  }
+}
