@@ -1,1 +1,108 @@
 @import 'base.scss';
+
+.main{
+  a{
+    display: block;
+    margin: 20px 0;
+    padding: 25px;
+    border: 2px solid $color-right-dark;
+    background: $color-light;
+    font: 25px $title-font;
+    color: $scd-text-color;
+    span{
+      display: inline-block;
+      &:first-child{
+        font-size: 30px;
+        width: 60%;
+        &:first-letter{
+          padding-right: 35px;
+          font-size: 50px;
+          line-height: 50px;
+          font-weight: bold;
+        }
+      }
+      &:last-child{
+        width: 40%;
+        font: 25px $number-font;
+        color: $main-text-color;
+        text-align: right;
+      }
+    }
+    &:hover{
+      opacity: .9;
+      cursor: pointer;
+      span{
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+
+.btn{
+  display: block;
+  max-width: 200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: $color-right;
+  border: 2px solid $color-right-dark;
+  font: 25px/30px $title-font;
+  color: $scd-text-color;
+  text-align: center;
+  &:hover{
+    opacity: .9;
+    cursor: pointer;
+  }
+}
+.timer{
+  padding: 100px 10px;
+}
+.count-down{
+  display: block;
+  width: 200px;
+  padding: 20px;
+  background: $color-right;
+  border: 2px solid $color-right-dark;
+  color: $main-text-color;
+  text-align: center;
+  &.prepare{
+    height: 200px;
+    margin: calc(50% - 200px) auto 0;
+    border-radius: 200px;
+    font: 115px $number-font;
+    line-height: 200px;
+
+  }
+  &.started{
+    float: right;
+    font: 25px $number-font;
+  }
+}
+
+.info{
+  font: 25px/40px $number-font;
+  color: $main-text-color;
+  text-align: center;
+  .btn{
+    margin: 100px auto 50px;
+  }
+}
+.buttons{
+  text-align: center;
+  .btn{
+    margin: 0 10px;
+    display: inline-block;
+    width: 200px;
+    &:first-child{
+      padding-left: 0;
+    }
+    &:last-child{
+      padding-right: 0;
+    }
+    b{
+      padding: 0 10px;
+      font-size: 40px;
+      vertical-align: middle;
+    }
+  }
+}

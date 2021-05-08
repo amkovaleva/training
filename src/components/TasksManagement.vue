@@ -1,17 +1,22 @@
 <template>
   <div>
     <div class="timer">
-      <div class="info" v-show="isInactive">
-        <p>Вам будут предложены уравнения. <br>
+      <div class="info" v-show="isInactive || isFinished">
+        <p v-if="isInactive">Вам будут предложены уравнения. <br>
           Нужно определить, явряются ли они верными. <br>
           Для управления можно использовать кнопки или стрелки клавиатуры. <br>
-          У вас 90 секунд. Удачи!</p>
-        <span class="btn" @click="stateChanging(states.prepare)">Начать</span>
+          У вас {{taskTime}} секунд. Удачи!</p>
+        <p v-if="isFinished">Вы дали ответ на {{ totalAnswers }} вопросов.<br>
+          Из них {{correctAnswers}} были верными. <br>
+          Это {{percent}} %.</p>
+        <span class="btn" @click="stateChanging()">Начать{{(isFinished) ? ' заново' : ''}}</span>
       </div>
-      <span class="count-down" :class="{prepare: isPrepare, started: isStarted}" v-show="isPrepare || isStarted">{{ timer }}</span>
+      <span class="count-down" :class="{prepare: isPrepare, started: isStarted}" v-show="isPrepare || isStarted">
+        {{ timer }}
+        <span v-if="isStarted"> | {{correctAnswers}} / {{totalAnswers}}</span></span>
     </div>
+    <Training v-show="isStarted" @collect-answer="collectAnswer"></Training>
 
-    <Training v-if="isStarted"></Training>
   </div>
 </template>
 
@@ -24,36 +29,52 @@ export default {
   data(){
     return {
       totalAnswers: 0,
-      rightAnswers: 0,
+      correctAnswers: 0,
       state: 0,
-      timer: 90,
+      timer: 0,
       prepareTime: 3,
-      taskTime: 90,
+      taskTime: 20,
       states: {inactive: 0, prepare: 1, started:2, finished:3}
     }
   },
   methods: {
-    stateChanging(to) {
-      if (to == null)
-        to = this.state + 1;
-      else if (this.state + 1 !== to) {
-        console.error(`Can't change state ${this.state} to ${to}`);
+    stateChanging() {
+      this.state = (this.state + 1 ) % 4;
+
+      if(!this.state) {
+        this.stateChanging();
         return;
       }
-      this.state = to;
 
       if (this.isPrepare || this.isStarted)
         this.startTimer();
+
+      if(this.isFinished)
+        this.collectTraining();
     },
     startTimer() {
       this.timer = (this.isPrepare) ? this.prepareTime : this.taskTime;
+
+      if(this.isStarted)
+        this.prepareForTraining();
+
       setTimeout(this.countDown, 1000);
     },
     countDown() {
       this.timer--;
       setTimeout((this.timer > 0) ? this.countDown : this.stateChanging, 1000);
+    },
+    collectAnswer(isCorrectAnswer){
+      this.totalAnswers++;
+      if(isCorrectAnswer)
+        this.correctAnswers++;
+    },
+    prepareForTraining(){
+      this.totalAnswers = 0;
+      this.correctAnswers = 0;
+    },
+    collectTraining(){
     }
-
   },
   computed:{
     isInactive(){
@@ -67,6 +88,11 @@ export default {
     },
     isFinished(){
       return this.state === this.states.finished
+    },
+    percent(){
+      if(!this.totalAnswers)
+        return 0;
+      return Math.round( this.correctAnswers / this.totalAnswers * 100);
     }
   }
 }

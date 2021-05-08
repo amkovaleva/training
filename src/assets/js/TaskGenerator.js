@@ -16,23 +16,14 @@ class TaskGenerator{
        this.generate();
     }
 
-    get Task() {
-        return {
-            number1: this._number1,
-            number2: this._number2,
-            operation: this._operation,
-            isEquationRight: this._isEquationRight,
-            result: this._result,
-        }
+    get equation(){
+        return `${this._number1} ${this._operations[this._operation]} ${this._number2} = ${this._result}`
     }
 
-    get equation(){
-        return `${this._number1} ${this._operations[this._operation]} ${this._number1} = ${this._result}`
-    }
 
     generate(){
-        this._operation = this._getRandomIntInclusive() % 4;
-        this._isEquationRight = !!this._getRandomIntInclusive() % 2;
+        this._operation = this._getRandomIntInclusive(4) % 4;
+        this._isEquationRight = this._getRandomIntInclusive(2) % 2;
 
         this._number1 = this._getRandomIntInclusive();
         this._number2 = this._getRandomIntInclusive();
@@ -41,10 +32,13 @@ class TaskGenerator{
         this._makeWrongAnswer();
     }
 
-    _getRandomIntInclusive() {
-        return Math.floor(Math.random() * (this._max - this._min + 1)) + this._min;
+    isAnswerCorrect(givenAnswer){
+        return givenAnswer === !!this._isEquationRight;
     }
 
+    _getRandomIntInclusive(max = this._max) {
+        return Math.floor(Math.random() * (max - this._min + 1)) + this._min;
+    }
 
     _generateRightAnswer() {
         switch(this._operation){
@@ -74,51 +68,61 @@ class TaskGenerator{
         }
     }
 
-
     _makeWrongAnswer(){
         if(this._isEquationRight)
             return;
 
-        this[`_makeWrongAnswerFor${this._operation}`]();
+        let randomInfo = this._maybeRandomAnswer();
+        if(!randomInfo)
+            return;
+
+        this[`_makeWrongAnswerFor${this._operation}`](randomInfo);
     }
 
     _maybeRandomAnswer(){
-
-        let min = Math.min(this._number1, this._number2),
-            mode = (min - 1) * 2 + 1,
-            changeVariant = this._getRandomIntInclusive() % mode;
+        let changeVariant = this._getRandomIntInclusive(100),
+            randomValue = this._getRandomIntInclusive(100);
 
         if(changeVariant === 0){
-            this._result = this._getRandomIntInclusive();
+            this._result = randomValue;
             return null;
         }
-        return {min: min, changeVariant: changeVariant, direction: (changeVariant  >= min) ? 1 : -1};
+
+        let min = Math.min(this._number1, this._number2),
+            max = Math.max(this._number1, this._number2);
+        return {min: min, max: max, changeVariant: changeVariant, randomValue: randomValue};
     }
 
-    _makeWrongAnswerFor0(){
-        let randomInfo = this._maybeRandomAnswer();
-        if(!randomInfo)
+    _makeWrongAnswerFor0(randomInfo){
+        let variantsCount = randomInfo.changeVariant % ((randomInfo.min - 1) * 2 + 1),
+            direction = (variantsCount < randomInfo.min) ? -1 : 1,
+            diff = randomInfo.changeVariant % randomInfo.min + 1,
+            newValue = this._result + direction * diff;
+
+        this._result = (newValue >= 0) ? newValue : (randomInfo.randomValue % ((randomInfo.min + 1) * randomInfo.max));
+    }
+    _makeWrongAnswerFor1(randomInfo){
+        this._makeWrongAnswerFor0(randomInfo);
+    }
+
+    _makeWrongAnswerFor2(randomInfo){
+        let variantsCount = randomInfo.changeVariant % ( (randomInfo.min - 1) * 2 + 1 + randomInfo.min * 2 * 2);
+        if(variantsCount <=  (randomInfo.min -1 ) * 2 ){
+            this._makeWrongAnswerFor0(randomInfo);
             return;
+        }
+        variantsCount -= (randomInfo.min - 1) * 2 + 1;
 
-        let diff = randomInfo.changeVariant % randomInfo.min;
-        this._result = this._result + randomInfo.direction * diff;
-    }
-    _makeWrongAnswerFor1(){
-        this._makeWrongAnswerFor0();
-    }
+        let direction = (variantsCount <= randomInfo.min * 2) ? -1 : 1,
+            baseNumber = (variantsCount % (randomInfo.min * 2) <= randomInfo.min) ? randomInfo.min : randomInfo.max,
+            diff = baseNumber * variantsCount,
+            newValue = this._result + direction * diff;
 
-    _makeWrongAnswerFor2(){
-        let randomInfo = this._maybeRandomAnswer();
-        if(!randomInfo)
-            return;
-
-        let diff = randomInfo.changeVariant % randomInfo.min;
-
-        this._result = this._result + randomInfo.direction * diff;
+        this._result = (newValue >= 0) ? newValue : (randomInfo.randomValue % (randomInfo.min * 2 * randomInfo.max));
     }
 
-    _makeWrongAnswerFor3(){
-        this._makeWrongAnswerFor2();
+    _makeWrongAnswerFor3(randomInfo){
+        this._makeWrongAnswerFor2(randomInfo);
     }
 
 }
