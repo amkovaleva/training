@@ -12,14 +12,14 @@
 }
 
 h1 {
-  margin: 50px 0;
+  padding: 100px 0 50px;
   font: 60px Lobster-Regular, "Times New Roman", serif;
   text-align: center;
   color: #5A0044;
 }
 
 h2 {
-  margin: 50px 0;
+  padding: 50px 0;
   font: 60px Kurale-Regular, "Times New Roman", serif;
   text-align: center;
   color: #002350;
@@ -28,11 +28,13 @@ h2 {
 
 #app {
   max-width: 800px;
+  min-height: 100vh;
   margin: 0 auto;
 }
 
 .training-container {
-  min-height: 100vh;
+  padding: 100px 0;
+  position: relative;
 }
 
 .main a {
@@ -87,10 +89,6 @@ h2 {
   cursor: pointer;
 }
 
-.timer {
-  padding: 100px 10px;
-}
-
 .count-down {
   display: block;
   width: 200px;
@@ -100,14 +98,14 @@ h2 {
   color: #002350;
   text-align: center;
 }
-.count-down.prepare {
+.count-down.round {
   height: 200px;
   margin: calc(50% - 200px) auto 0;
   border-radius: 200px;
   font: 115px Kurale-Regular, "Times New Roman", serif;
   line-height: 200px;
 }
-.count-down.started {
+.count-down.square {
   float: right;
   font: 25px Kurale-Regular, "Times New Roman", serif;
 }
@@ -141,6 +139,9 @@ h2 {
   vertical-align: middle;
 }
 
+.question {
+  padding: 150px 0;
+}
 .question h2 span {
   transition: all 0.5s linear;
   padding: 0 20px;

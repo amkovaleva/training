@@ -6,14 +6,12 @@
       <a href="#" @click="selectTraining(trainings.GiveAnswer)"><span>&#x270F; Опять проверь себя: </span><span>Дай ответ</span></a>
       <a href="#" @click="selectTraining(trainings.Extra)"><span>&#x265B; Тренируй себя: </span><span>Что скрывается под ?</span></a>
     </div>
-    <div class="training-container" v-else>
-      <TasksManagement></TasksManagement>
-    </div>
+    <Training v-else></Training>
   </div>
 </template>
 
 <script>
-import TasksManagement from "./components/TasksManagement";
+import Training from "./components/Training";
 
 export default {
   name: 'App',
@@ -34,7 +32,7 @@ export default {
     }
   },
   components: {
-    TasksManagement
+    Training
   }
 }
 </script>

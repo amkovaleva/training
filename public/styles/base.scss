@@ -25,13 +25,13 @@ $base-font: Helvetica, Sans-serif;
   padding:0;
 }
 h1{
-  margin: 50px 0;
+  padding: 100px 0 50px;
   font: 60px $title-font;
   text-align: center;
   color: $scd-text-color;
 }
 h2{
-  margin: 50px 0;
+  padding: 50px 0;
   font: 60px $number-font;
   text-align: center;
   color: $main-text-color;
@@ -39,8 +39,10 @@ h2{
 }
 #app{
   max-width: 800px;
+  min-height: 100vh;
   margin: 0 auto;
 }
 .training-container{
-  min-height: 100vh;
+  padding: 100px 0;
+  position: relative;
 }
