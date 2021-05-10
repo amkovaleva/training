@@ -1,21 +1,26 @@
 <template>
+  <div>
     <h2>
       <span  :class="`state${state}`">{{ equation }} ?</span>
       <span v-show="isErrorState">{{ correctEquation }}</span>
     </h2>
+    <Answer @answer-to-check="checkAnswer"></Answer>
+  </div>
 </template>
 
 <script>
-import TaskGenerator from '@/assets/js/TaskGenerator'
+import TaskGenerator from '@/assets/js/TaskGenerator';
+import Answer from "./Answer";
 let taskGenerator = new TaskGenerator(1, 10);
 
 export default {
   name: "Task",
+  components: {Answer},
   data() {
     return {
       taskGenerator: taskGenerator,
       correctTime: 500,
-      errorTime: 2000,
+      errorTime: 1000,
     }
   },
   computed: {
@@ -37,9 +42,11 @@ export default {
     generateTask() {
       this.taskGenerator.generate();
     },
-    givenAnswer(isTrueAnswer) {
-      let isCorrect = this.taskGenerator.checkAnswer(isTrueAnswer);
-      setTimeout(()=> this.$emit('answer-checked', isCorrect), isCorrect ? this.correctTime:  this.errorTime);
+
+    checkAnswer(givenAnswer) {
+      let isCorrect = this.taskGenerator.checkAnswer(givenAnswer);
+      setTimeout(()=> {this.$emit('answer-checked', isCorrect); this.generateTask();},
+          isCorrect ? this.correctTime:  this.errorTime);
     }
   }
 }

@@ -20,12 +20,7 @@
     <span v-if="isStarted"> | {{ correctAnswers }} / {{ totalAnswers }}</span>
 
     <div class="question" v-show="isStarted">
-      <Task @answer-checked="answerChecked" ref="Task"></Task>
-      <div class="buttons">
-        <span class="btn yes" @click="givenAnswer(true)" @keyup.left="givenAnswer(true)"><b>&#8617;</b> Верно</span>
-        <span class="btn no" @click="givenAnswer(false)"
-              @keyup.right="givenAnswer(false)">Не верно <b>&#8618;</b></span>
-      </div>
+      <Task @answer-checked="collectAnswer"></Task>
     </div>
   </div>
 </template>
@@ -39,10 +34,6 @@ export default {
   components: {Task, Timer},
   data() {
     return {
-      arrowKeys: {
-        left: 'ArrowLeft',
-        right: 'ArrowRight'
-      },
       totalAnswers: 0,
       correctAnswers: 0,
       state: 0,
@@ -52,9 +43,6 @@ export default {
     }
   },
   computed: {
-    yesNoKeys() {
-      return [this.arrowKeys.left, this.arrowKeys.right];
-    },
     isInactive() {
       return this.state === this.states.inactive
     },
@@ -74,17 +62,6 @@ export default {
     }
   },
   methods: {
-
-    givenAnswer(isTrueAnswer) {
-      if (this.$refs.Task)
-        this.$refs.Task.givenAnswer(isTrueAnswer);
-    },
-
-    answerChecked(isCorrectAnswer) {
-      this.collectAnswer(isCorrectAnswer);
-      this.$refs.Task.generateTask();
-    },
-
     stateChanging() {
       this.state = (this.state + 1) % 4;
 
@@ -106,14 +83,6 @@ export default {
       this.totalAnswers = 0;
       this.correctAnswers = 0;
     }
-  },
-  mounted() {
-    window.addEventListener('keyup', event => {
-      if (!this.yesNoKeys.includes(event.key))
-        return;
-
-      this.givenAnswer(this.arrowKeys.left === event.key);
-    })
   }
 }
 </script>
