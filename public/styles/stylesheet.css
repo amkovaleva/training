@@ -22,7 +22,7 @@ h2 {
   margin: 50px 0;
   font: 60px Kurale-Regular, "Times New Roman", serif;
   text-align: center;
-  color: #5A0044;
+  color: #002350;
   font-weight: bold;
 }
 
@@ -139,6 +139,20 @@ h2 {
   padding: 0 10px;
   font-size: 40px;
   vertical-align: middle;
+}
+
+.question h2 span {
+  transition: all 0.5s linear;
+  padding: 0 20px;
+}
+.question h2 span.state1 {
+  color: #587400;
+  font-size: 40px;
+}
+.question h2 span.state2 {
+  color: #8B0068;
+  text-decoration: line-through;
+  font-size: 40px;
 }
 
 /*# sourceMappingURL=stylesheet.css.map */

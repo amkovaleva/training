@@ -33,7 +33,7 @@ export default {
       state: 0,
       timer: 0,
       prepareTime: 3,
-      taskTime: 20,
+      taskTime: 90,
       states: {inactive: 0, prepare: 1, started:2, finished:3}
     }
   },

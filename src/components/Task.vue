@@ -1,5 +1,8 @@
 <template>
-  <h2>{{ equation }} ?</h2>
+    <h2>
+      <span  :class="`state${state}`">{{ equation }} ?</span>
+      <span v-show="isErrorState">{{ correctEquation }}</span>
+    </h2>
 </template>
 
 <script>
@@ -10,13 +13,24 @@ export default {
   name: "Task",
   data() {
     return {
-      taskGenerator: taskGenerator
+      taskGenerator: taskGenerator,
+      correctTime: 500,
+      errorTime: 2000,
     }
   },
   computed: {
     equation() {
       return this.taskGenerator.equation;
-    }
+    },
+    correctEquation() {
+      return this.taskGenerator.correctEquation;
+    },
+    state() {
+      return this.taskGenerator.state;
+    },
+    isErrorState() {
+      return this.taskGenerator.isErrorState;
+    },
   },
 
   methods: {
@@ -24,9 +38,8 @@ export default {
       this.taskGenerator.generate();
     },
     givenAnswer(isTrueAnswer) {
-      let isCorrect = this.taskGenerator.isAnswerCorrect(isTrueAnswer);
-
-      this.$emit('answer-checked', isCorrect);
+      let isCorrect = this.taskGenerator.checkAnswer(isTrueAnswer);
+      setTimeout(()=> this.$emit('answer-checked', isCorrect), isCorrect ? this.correctTime:  this.errorTime);
     }
   }
 }

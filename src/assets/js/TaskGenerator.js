@@ -3,12 +3,15 @@ class TaskGenerator{
     _number1 = 1;
     _number2 = 1;
     _operation = -1;
-    _result = -1;
+    _result = 0;
+    _correctResult = 0;
     _max = 10;
     _min = 1;
     _isEquationRight = true;
+    _state = 0;
 
-    _operations = ['+', '-', '*', '/']
+    _operations = ['+', '-', '*', '/'];
+    _states = {new:0, correct: 1, error: 2};
 
     constructor(min, max) {
        this._min = min;
@@ -20,10 +23,23 @@ class TaskGenerator{
         return `${this._number1} ${this._operations[this._operation]} ${this._number2} = ${this._result}`
     }
 
+    get correctEquation(){
+        return `${this._number1} ${this._operations[this._operation]} ${this._number2} = ${this._correctResult}`
+    }
+
+    get state(){
+        return this._state;
+    }
+
+    get isErrorState(){
+        return this._state === this._states.error;
+    }
+
 
     generate(){
+        this._state = this._states.new;
         this._operation = this._getRandomIntInclusive(4) % 4;
-        this._isEquationRight = this._getRandomIntInclusive(2) % 2;
+        this._isEquationRight = !!(this._getRandomIntInclusive(2) % 2);
 
         this._number1 = this._getRandomIntInclusive();
         this._number2 = this._getRandomIntInclusive();
@@ -32,8 +48,10 @@ class TaskGenerator{
         this._makeWrongAnswer();
     }
 
-    isAnswerCorrect(givenAnswer){
-        return givenAnswer === !!this._isEquationRight;
+    checkAnswer(givenAnswer){
+        let isCorrect = givenAnswer === this._isEquationRight;
+        this._state = (isCorrect) ? this._states.correct : this._states.error;
+        return isCorrect;
     }
 
     _getRandomIntInclusive(max = this._max) {
@@ -66,6 +84,7 @@ class TaskGenerator{
                 this._result = this._number1 / this._number2;
             }
         }
+        this._correctResult = this._result;
     }
 
     _makeWrongAnswer(){
