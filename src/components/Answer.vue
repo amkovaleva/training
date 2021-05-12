@@ -1,5 +1,5 @@
 <template>
-  <div class="buttons">
+  <div class="buttons" :class="neededAnswer ? '' : 'disabled' ">
     <span class="btn yes" @click="givenAnswer(true)" @keyup.left="givenAnswer(true)"><b>&#8617;</b> Верно</span>
     <span class="btn no" @click="givenAnswer(false)"
           @keyup.right="givenAnswer(false)">Не верно <b>&#8618;</b></span>
@@ -9,6 +9,7 @@
 <script>
 export default {
   name: "Answer",
+  props: ['neededAnswer'],
   data() {
     return {
       arrowKeys: {
@@ -29,6 +30,10 @@ export default {
   },
   mounted() {
     window.addEventListener('keyup', event => {
+
+      if(!this.neededAnswer)
+        return;
+
       if (!this.yesNoKeys.includes(event.key))
         return;
 

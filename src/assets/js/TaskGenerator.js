@@ -35,6 +35,10 @@ class TaskGenerator{
         return this._state === this._states.error;
     }
 
+    get isNewState(){
+        return this._state === this._states.new;
+    }
+
 
     generate(){
         this._state = this._states.new;

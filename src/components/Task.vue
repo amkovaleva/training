@@ -4,7 +4,7 @@
       <span  :class="`state${state}`">{{ equation }} ?</span>
       <span v-show="isErrorState">{{ correctEquation }}</span>
     </h2>
-    <Answer @answer-to-check="checkAnswer"></Answer>
+    <Answer @answer-to-check="checkAnswer" :needed-answer="isNewState"></Answer>
   </div>
 </template>
 
@@ -35,6 +35,9 @@ export default {
     },
     isErrorState() {
       return this.taskGenerator.isErrorState;
+    },
+    isNewState() {
+      return this.taskGenerator.isNewState;
     },
   },
 

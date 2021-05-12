@@ -17,8 +17,6 @@
             :design="(isPrepare) ? 'round' : 'square'"
             @timer-ended="stateChanging()"></Timer>
 
-    <span v-if="isStarted"> | {{ correctAnswers }} / {{ totalAnswers }}</span>
-
     <div class="question" v-show="isStarted">
       <Task @answer-checked="collectAnswer"></Task>
     </div>
