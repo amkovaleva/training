@@ -1,4 +1,6 @@
 @import 'base.scss';
+@import 'timer.scss';
+@import 'training.scss';
 
 .main{
   a{
@@ -37,8 +39,6 @@
     }
   }
 }
-
-
 .btn{
   display: block;
   max-width: 200px;
@@ -52,82 +52,5 @@
   &:hover{
     opacity: .9;
     cursor: pointer;
-  }
-}
-
-.count-down{
-  display: block;
-  width: 200px;
-  padding: 20px;
-  background: $color-right;
-  border: 2px solid $color-right-dark;
-  color: $main-text-color;
-  text-align: center;
-  &.round{
-    height: 200px;
-    margin: calc(50% - 200px) auto 0;
-    border-radius: 200px;
-    font: 115px $number-font;
-    line-height: 200px;
-
-  }
-  &.square{
-    float: right;
-    font: 25px $number-font;
-  }
-}
-
-.info{
-  font: 25px/40px $number-font;
-  color: $main-text-color;
-  text-align: center;
-  .btn{
-    margin: 100px auto 50px;
-  }
-}
-
-.buttons{
-  text-align: center;
-  .btn{
-    margin: 0 10px;
-    display: inline-block;
-    width: 200px;
-    &:first-child{
-      padding-left: 0;
-    }
-    &:last-child{
-      padding-right: 0;
-    }
-    b{
-      padding: 0 10px;
-      font-size: 40px;
-      vertical-align: middle;
-    }
-  }
-  &.disabled{
-    .btn{
-      opacity: .5;
-      &:hover{
-        cursor: default;
-        opacity: .5;
-      }
-    }
-  }
-}
-
-.question{
-  padding: 150px 0;
-  h2 span{
-    transition: all .5s linear;
-    padding: 0 20px;
-    &.state1{
-      color: $color-right-dark;
-      font-size: 40px;
-    }
-    &.state2{
-      color: $color-wrong;
-      text-decoration: line-through;
-      font-size: 40px;
-    }
   }
 }

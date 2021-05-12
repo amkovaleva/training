@@ -1,0 +1,30 @@
+@import 'base.scss';
+
+.buttons{
+  text-align: center;
+  .btn{
+    margin: 0 10px;
+    display: inline-block;
+    width: 200px;
+    &:first-child{
+      padding-left: 0;
+    }
+    &:last-child{
+      padding-right: 0;
+    }
+    b{
+      padding: 0 10px;
+      font-size: 40px;
+      vertical-align: middle;
+    }
+  }
+  &.disabled{
+    .btn{
+      opacity: .5;
+      &:hover{
+        cursor: default;
+        opacity: .5;
+      }
+    }
+  }
+}

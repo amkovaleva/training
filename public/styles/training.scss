@@ -1,0 +1,10 @@
+@import 'task.scss';
+
+.info{
+  font: 25px/40px $number-font;
+  color: $main-text-color;
+  text-align: center;
+  .btn{
+    margin: 100px auto 50px;
+  }
+}

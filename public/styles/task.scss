@@ -1,0 +1,18 @@
+@import 'answer.scss';
+
+.question{
+  padding: 100px 0;
+  h2 span{
+    transition: all .5s linear;
+    padding: 0 20px;
+    &.state1{
+      color: $color-right-dark;
+      font-size: 40px;
+    }
+    &.state2{
+      color: $color-wrong;
+      text-decoration: line-through;
+      font-size: 40px;
+    }
+  }
+}
