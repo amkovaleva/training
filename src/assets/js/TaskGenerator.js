@@ -43,7 +43,7 @@ class TaskGenerator{
     generate(){
         this._state = this._states.new;
         this._operation = this._getRandomIntInclusive(4) % 4;
-        this._isEquationRight = !!(this._getRandomIntInclusive(2) % 2);
+        this._isEquationRight =  !!(this._getRandomIntInclusive(2) % 2);
 
         this._number1 = this._getRandomIntInclusive();
         this._number2 = this._getRandomIntInclusive();
@@ -78,7 +78,7 @@ class TaskGenerator{
             case 3: {
                 this._result = this._number1 * this._number2;
 
-                if(this._operation === 2) return;
+                if(this._operation === 2) break;
 
                 let changePart = this._getRandomIntInclusive() % 2,
                     tmp = this._result;
