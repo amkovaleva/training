@@ -12,6 +12,7 @@
 
 <script>
 import Training from "./components/Training";
+import './assets/styles/stylesheet.css';
 
 export default {
   name: 'App',
