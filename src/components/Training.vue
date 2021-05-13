@@ -14,7 +14,7 @@
 
     <Timer  ref="Timer" v-show="isPrepare || isStarted"
             :startValue="(isPrepare) ? prepareTime : ((isStarted) ? taskTime : -1)"
-            :design="(isPrepare) ? 'round' : 'square'"
+            :design="(isPrepare) ? 'big' : 'small'"
             @timer-ended="stateChanging()"></Timer>
 
     <div class="question" v-show="isStarted">

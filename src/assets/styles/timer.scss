@@ -1,23 +1,18 @@
 @import 'base';
 
 .count-down{
-  display: block;
-  width: 200px;
-  padding: 20px;
-  background: $color-right;
-  border: 2px solid $color-right-dark;
-  color: $main-text-color;
-  text-align: center;
-  &.round{
+  color: $main-text-color !important;
+  border-radius: 200px;
+  &.big{
     height: 200px;
+    width: 200px;
     margin: calc(50% - 300px) auto 0;
-    border-radius: 200px;
-    font: 115px $number-font;
-    line-height: 200px;
-
+    font: 100px/200px $number-font;
   }
-  &.square{
+  &.small{
+    height: 50px;
+    width: 50px;
     float: right;
-    font: 25px $number-font;
+    font: 25px/50px $number-font;
   }
 }

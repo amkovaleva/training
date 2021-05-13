@@ -1,5 +1,5 @@
 <template>
-  <span class="count-down" :class="design">
+  <span class="count-down btn" :class="design">
           {{ counter }}
   </span>
 </template>
