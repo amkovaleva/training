@@ -1,6 +1,9 @@
 <template>
   <span class="count-down btn" :class="design">
           {{ counter }}
+    <audio id="timerAudio" preload>
+      <source src="/sounds/clock.mp3" type="audio/mpeg"/>
+    </audio>
   </span>
 </template>
 
@@ -11,7 +14,8 @@ export default {
   data: function () {
     return {
       counter: 0,
-      timeout: 1000
+      timeout: 1000,
+      audioControl: null
     }
   },
   methods:{
@@ -23,12 +27,16 @@ export default {
       if(this.startValue < 0)
         return;
       this.counter--;
-      setTimeout((this.counter > 0) ? this.countDown : this.triggerEnd, this.timeout);
+      if(this.counter <= 3)
+        this.audioControl.play();
+      setTimeout((this.counter > 1) ? this.countDown : this.triggerEnd, this.timeout);
     },
-
     triggerEnd() {
       this.$emit('timer-ended');
     },
+  },
+  mounted() {
+    this.audioControl = document.getElementById('timerAudio');
   },
   watch: {
     startValue: function(newVal, oldVal) {
