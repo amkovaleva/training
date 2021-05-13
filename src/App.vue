@@ -1,18 +1,26 @@
 <template>
   <div id="app">
-    <div class="main" v-if="!trainingSelected">
-      <h1>Научись быстро считать!</h1>
-      <a href="#" @click="selectTraining(trainings.YesNo)"><span>&#x2714; Проверь себя: </span><span>Верно / Неверно</span></a>
-      <a href="#" @click="selectTraining(trainings.GiveAnswer)"><span>&#x270F; Опять проверь себя: </span><span>Дай ответ</span></a>
-      <a href="#" @click="selectTraining(trainings.Extra)"><span>&#x265B; Тренируй себя: </span><span>Что скрывается под ?</span></a>
+    <nav>
+      <div class="container">
+        <h1>Научись быстро считать!<Settings></Settings></h1>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="main" v-if="!trainingSelected">
+        <a href="#" @click="selectTraining(trainings.YesNo)"><span>&#x2714; Проверь себя: </span><span>Верно / Неверно</span></a>
+        <a href="#" @click="selectTraining(trainings.GiveAnswer)"><span>&#x270F; Опять проверь себя: </span><span>Дай ответ</span></a>
+        <a href="#" @click="selectTraining(trainings.Extra)"><span>&#x265B; Тренируй себя: </span><span>Что скрывается под ?</span></a>
+      </div>
+      <Training v-else></Training>
     </div>
-    <Training v-else></Training>
   </div>
 </template>
 
 <script>
 import Training from "./components/Training";
 import './assets/styles/stylesheet.css';
+import Settings from "@/components/Settings";
 
 export default {
   name: 'App',
@@ -33,6 +41,7 @@ export default {
     }
   },
   components: {
+    Settings,
     Training
   }
 }

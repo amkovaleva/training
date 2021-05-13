@@ -20,6 +20,8 @@ export default {
       setTimeout(this.countDown, this.timeout);
     },
     countDown() {
+      if(this.startValue < 0)
+        return;
       this.counter--;
       setTimeout((this.counter > 0) ? this.countDown : this.triggerEnd, this.timeout);
     },

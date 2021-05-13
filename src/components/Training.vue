@@ -35,12 +35,16 @@ export default {
       totalAnswers: 0,
       correctAnswers: 0,
       state: 0,
-      prepareTime: 3,
-      taskTime: 90,
       states: {inactive: 0, prepare: 1, started: 2, finished: 3}
     }
   },
   computed: {
+    prepareTime(){
+        return (window.settings) ? window.settings.time.prepare: 3;
+      },
+    taskTime(){
+        return (window.settings) ? window.settings.time.training: 90;
+      },
     isInactive() {
       return this.state === this.states.inactive
     },

@@ -6,43 +6,7 @@ $color-right: #87B300;
 $color-right-dark: #587400;
 $color-light: #c8cfac;
 
-@font-face {
-  font-family: "Lobster-Regular";
-  src: url('~@/assets/fonts/Lobster-Regular.ttf') format("opentype");
-}
-
-@font-face {
-  font-family: "Kurale-Regular";
-  src: url('~@/assets/fonts/Kurale-Regular.ttf') format("opentype");
-}
 
 $title-font: Lobster-Regular, 'Times New Roman', serif;
 $number-font: Kurale-Regular, 'Times New Roman', serif;
 $base-font: Helvetica, Sans-serif;
-
-*{
-  margin: 0;
-  padding:0;
-}
-h1{
-  padding: 100px 0 50px;
-  font: 60px $title-font;
-  text-align: center;
-  color: $scd-text-color;
-}
-h2{
-  padding: 50px 0;
-  font: 60px $number-font;
-  text-align: center;
-  color: $main-text-color;
-  font-weight: bold;
-}
-#app{
-  max-width: 800px;
-  min-height: 100vh;
-  margin: 0 auto;
-}
-.training-container{
-  padding: 100px 0;
-  position: relative;
-}

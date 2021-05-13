@@ -1,6 +1,56 @@
 @import 'base';
 @import 'timer';
 @import 'training';
+@import 'settings';
+
+@font-face {
+  font-family: "Lobster-Regular";
+  src: url('~@/assets/fonts/Lobster-Regular.ttf') format("opentype");
+}
+
+@font-face {
+  font-family: "Kurale-Regular";
+  src: url('~@/assets/fonts/Kurale-Regular.ttf') format("opentype");
+}
+
+*{
+  margin: 0;
+  padding:0;
+}
+h1{
+  padding:20px;
+  font: 50px $title-font;
+  text-align: center;
+  color: $scd-text-color;
+}
+h2{
+  padding: 50px 0;
+  font: 60px $number-font;
+  text-align: center;
+  color: $main-text-color;
+  font-weight: bold;
+}
+
+h3{
+  padding: 20px 0;
+  font: 40px $title-font;
+  text-align: center;
+  color: $scd-text-color;
+  text-decoration: underline;
+}
+
+#app{
+  min-height: 100vh;
+}
+
+.container{
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.training-container{
+  position: relative;
+}
 
 .main{
   a{

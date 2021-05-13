@@ -1,0 +1,73 @@
+@import 'base';
+
+.settings{
+  font-weight: bold;
+  float: right;
+  & > span:hover, .close:hover{
+    opacity: .8;
+    cursor: pointer;
+  }
+}
+.close{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+}
+form {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: white;
+  bottom: 0;
+  overflow: scroll;
+  padding: 10px;
+  z-index: 1;
+  .row {
+    input{
+      margin: 0 10px;
+      &[type=number], &[type=text]{
+        padding: 5px;
+        border-radius: 5px;
+      }
+      &[type=text]{
+        min-width: 60%;
+      }
+    }
+    label{
+      font: 20px $base-font;
+      color: $main-text-color;
+      min-width: 60%;
+      display: inline-block;
+      margin: 10px 0;
+    }
+    &.center{
+      label{
+        min-width: 0;
+      }
+    }
+  }
+
+  & > .row{
+    label{
+      min-width: 20%;
+    }
+    input{
+      min-width: 70%;
+    }
+  }
+  fieldset {
+    padding: 15px;
+    margin: 15px 0;
+
+    legend {
+      padding: 0 10px;
+      font: 30px $title-font;
+      color: $scd-text-color;
+      span{
+        font-size: 25px;
+      }
+    }
+  }
+}

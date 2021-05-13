@@ -19,11 +19,15 @@ export default {
   data() {
     return {
       taskGenerator: taskGenerator,
-      correctTime: 500,
-      errorTime: 1000,
     }
   },
   computed: {
+    correctTime(){
+      return (window.settings) ? window.settings.time.afterAnswer.right: 500;
+    },
+    errorTime(){
+      return (window.settings) ? window.settings.time.afterAnswer.wrong: 1000;
+    },
     equation() {
       return this.taskGenerator.equation;
     },
