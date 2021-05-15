@@ -25,20 +25,21 @@ export default {
   },
   methods:{
     givenAnswer(givenAnswer) {
-      this.$emit('answer-to-check', givenAnswer);
-    },
-  },
-  mounted() {
-    window.addEventListener('keyup', event => {
-
       if(!this.neededAnswer)
         return;
 
+      this.$emit('answer-to-check', givenAnswer);
+    },
+    keyupHandler(event) {
       if (!this.yesNoKeys.includes(event.key))
         return;
 
       this.givenAnswer(this.arrowKeys.left === event.key);
-    })
+    }
+  },
+  mounted() {
+    window.removeEventListener('keyup', this.keyupHandler);
+    window.addEventListener('keyup', this.keyupHandler);
   }
 
 }

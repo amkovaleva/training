@@ -2,10 +2,7 @@
   <div class="training-container" >
 
     <div class="info" v-show="isInactive || isFinished">
-      <p v-if="isInactive">Вам будут предложены уравнения. <br>
-        Нужно определить, явряются ли они верными. <br>
-        Для управления можно использовать кнопки или стрелки клавиатуры. <br>
-        У вас {{ taskTime }} секунд. Удачи!</p>
+      <Intro v-if="isInactive" :task-time="taskTime"></Intro>
       <Summary v-show="isFinished" :correct-answers="correctAnswers" :total-answers="totalAnswers"></Summary>
       <span class="btn" @click="stateChanging()">Начать{{ (isFinished) ? ' заново' : '' }}</span>
     </div>
@@ -25,10 +22,11 @@
 import Task from "./Task";
 import Timer from "./Timer";
 import Summary from "@/components/Summary";
+import Intro from "@/components/Intro";
 
 export default {
   name: "Training",
-  components: {Summary, Task, Timer},
+  components: {Intro, Summary, Task, Timer},
   data() {
     return {
       totalAnswers: 0,
