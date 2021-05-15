@@ -6,9 +6,7 @@
         Нужно определить, явряются ли они верными. <br>
         Для управления можно использовать кнопки или стрелки клавиатуры. <br>
         У вас {{ taskTime }} секунд. Удачи!</p>
-      <p v-show="isFinished">Вы дали ответ на {{ totalAnswers }} вопросов.<br>
-        Из них {{ correctAnswers }} были верными. <br>
-        Это {{ percent }} %.</p>
+      <Summary v-show="isFinished" :correct-answers="correctAnswers" :total-answers="totalAnswers"></Summary>
       <span class="btn" @click="stateChanging()">Начать{{ (isFinished) ? ' заново' : '' }}</span>
     </div>
 
@@ -26,10 +24,11 @@
 <script>
 import Task from "./Task";
 import Timer from "./Timer";
+import Summary from "@/components/Summary";
 
 export default {
   name: "Training",
-  components: {Task, Timer},
+  components: {Summary, Task, Timer},
   data() {
     return {
       totalAnswers: 0,
@@ -56,11 +55,6 @@ export default {
     },
     isFinished() {
       return this.state === this.states.finished
-    },
-    percent() {
-      if (!this.totalAnswers)
-        return 0;
-      return Math.round(this.correctAnswers / this.totalAnswers * 100);
     }
   },
   methods: {
