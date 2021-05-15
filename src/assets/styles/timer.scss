@@ -1,18 +1,25 @@
 @import 'base';
 
 .count-down{
+  position: absolute;
   color: $main-text-color !important;
   border-radius: 200px;
-  &.big{
+}
+aside.big{
+  .count-down{
     height: 200px;
     width: 200px;
-    margin: calc(50% - 300px) auto 0;
+    top: 150px;
+    left: calc(50% - 100px);
     font: 100px/200px $number-font;
   }
-  &.small{
+}
+aside.small{
+  .count-down{
     height: 50px;
     width: 50px;
-    float: right;
+    top: -10px;
+    right: 0;
     font: 25px/50px $number-font;
   }
 }

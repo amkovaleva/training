@@ -7,13 +7,22 @@
       <span class="btn" @click="stateChanging()">Начать{{ (isFinished) ? ' заново' : '' }}</span>
     </div>
 
-    <Timer  ref="Timer" v-show="isPrepare || isStarted"
-            :startValue="(isPrepare) ? prepareTime : ((isStarted) ? taskTime : -1)"
-            :design="(isPrepare) ? 'big' : 'small'"
-            @timer-ended="stateChanging()"></Timer>
+
+    <aside :class="asideMode">
+      <span class="btn" v-show="isStarted" @click="back">&#129120;</span>
+      <span class="btn" v-show="isStarted" @click="reload">&#11118;</span>
+      <span class="btn last" v-show="isStarted" @click="pauseToggle">{{isOnPause ? '⏵︎︎' : '⏸' }}︎</span>
+      <Timer  ref="Timer" v-show="isPrepare || isStarted"
+              :start-value="(isPrepare) ? prepareTime : ((isStarted) ? taskTime : -1)"
+              :enebled="isPrepare || isStarted"
+              :is-on-pause="isOnPause"
+              @timer-ended="stateChanging()"
+              @pause-toggle="pauseToggle" ></Timer>
+    </aside>
 
     <div class="question" v-show="isStarted">
-      <Task @answer-checked="collectAnswer"></Task>
+      <Task @answer-checked="collectAnswer"
+            :is-on-pause="isOnPause"></Task>
     </div>
   </div>
 </template>
@@ -32,10 +41,14 @@ export default {
       totalAnswers: 0,
       correctAnswers: 0,
       state: 0,
+      isOnPause: false,
       states: {inactive: 0, prepare: 1, started: 2, finished: 3}
     }
   },
   computed: {
+    asideMode(){
+      return this.isPrepare ? 'big' : 'small'
+    },
     prepareTime(){
         return (window.settings) ? window.settings.time.prepare: 3;
       },
@@ -56,17 +69,27 @@ export default {
     }
   },
   methods: {
-    stateChanging() {
-      this.state = (this.state + 1) % 4;
+    stateChanging(skipSteps = 1) {
+      this.state = (this.state + skipSteps) % 4;
 
       if (!this.state) {
         this.stateChanging();
         return;
       }
 
-      if (this.isStarted)
+      if (this.isPrepare)
         this.prepareForTraining();
 
+    },
+    pauseToggle(){
+      this.isOnPause = !this.isOnPause;
+    },
+    reload(){
+      this.stateChanging(3);
+    },
+    back(){
+      this.state = 0;
+      this.$emit('change-training');
     },
     collectAnswer(isCorrectAnswer) {
       this.totalAnswers++;
@@ -76,6 +99,7 @@ export default {
     prepareForTraining() {
       this.totalAnswers = 0;
       this.correctAnswers = 0;
+      this.isOnPause = false;
     }
   }
 }

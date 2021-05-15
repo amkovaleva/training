@@ -1,7 +1,7 @@
 @import 'answer';
 
 .question{
-  padding: 100px 0;
+  padding: 50px 0;
   h2 span{
     transition: all .5s linear;
     padding: 0 20px;
@@ -13,6 +13,18 @@
       color: $color-wrong;
       text-decoration: line-through;
       font-size: 40px;
+    }
+  }
+}
+.training-container{
+  aside{
+    position: relative;
+    & > span{
+      display: inline-block;
+      margin: 5px;
+      &.last{
+        margin-right: 55px;
+      }
     }
   }
 }

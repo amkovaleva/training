@@ -12,7 +12,7 @@
         <a href="#" @click="selectTraining(trainings.GiveAnswer)"><span>&#x270F; Опять проверь себя: </span><span>Дай ответ</span></a>
         <a href="#" @click="selectTraining(trainings.Extra)"><span>&#x265B; Тренируй себя: </span><span>Что скрывается под ?</span></a>
       </div>
-      <Training v-else></Training>
+      <Training v-else @change-training="changeTraining"></Training>
     </div>
   </div>
 </template>
@@ -38,6 +38,9 @@ export default {
   methods:{
     selectTraining(index){
       this.activeTraining = index;
+    },
+    changeTraining(){
+      this.activeTraining = 0;
     }
   },
   components: {

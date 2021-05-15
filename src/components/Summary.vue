@@ -1,7 +1,7 @@
 <template>
-  <p v-show="isFinished">Вы дали ответ на {{ totalAnswers }} вопросов.<br>
+  <p >Вы дали ответ на {{ totalAnswers }} вопросов.<br>
     Из них {{ correctAnswers }} были верными. <br>
-    Это {{ percent }} %.</p>
+    Это {{ percent }}%.</p>
 </template>
 
 <script>

@@ -4,7 +4,7 @@
       <span  :class="`state${state}`">{{ equation }} ?</span>
       <span v-show="isErrorState">{{ correctEquation }}</span>
     </h2>
-    <Answer @answer-to-check="checkAnswer" :needed-answer="isNewState"></Answer>
+    <Answer @answer-to-check="checkAnswer" :needed-answer="isNewState && !isOnPause"></Answer>
     <Sound id="wrongAudio" src="/sounds/error.mp3" ref="WrongAudio"></Sound>
     <Sound id="rightAudio" src="/sounds/ok.mp3" ref="RightAudio"></Sound>
   </div>
@@ -19,6 +19,7 @@ let taskGenerator = new TaskGenerator(1, 10);
 export default {
   name: "Task",
   components: {Sound, Answer},
+  props: ['isOnPause'],
   data() {
     return {
       taskGenerator: taskGenerator,
@@ -50,10 +51,15 @@ export default {
 
   methods: {
     generateTask() {
+      if(this.isOnPause)
+        return;
       this.taskGenerator.generate();
     },
 
     checkAnswer(givenAnswer) {
+      if(this.isOnPause)
+        return;
+
       let isCorrect = this.taskGenerator.checkAnswer(givenAnswer);
       if(isCorrect)
         this.$refs.RightAudio.play();
