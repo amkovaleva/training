@@ -8,7 +8,7 @@
     <div v-else class="full-answer" :class="neededAnswer ? '' : 'disabled' ">
         <span>? =</span>
         <input id="fullAnswerId" v-model="typedAnswer" type="number" min="0" step="1" :disabled="!neededAnswer">
-        <span class="btn" @click="givenAnswer(typedAnswer)">  - </span>
+        <span class="btn" @click="givenAnswer(typedAnswer)">	&#8629;</span>
         <span class="btn" @click="givenAnswer('')"> Следующий </span>
     </div>
   </div>
