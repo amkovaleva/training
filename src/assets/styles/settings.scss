@@ -2,6 +2,7 @@
 
 .settings{
   font-weight: bold;
+  padding: 0 10px;
   float: right;
   & > span:hover, .close:hover{
     opacity: .8;
@@ -14,7 +15,7 @@
   right: 20px;
 
 }
-form {
+.fixed-full-page{
   position: fixed;
   left: 0;
   right: 0;
@@ -24,6 +25,8 @@ form {
   overflow: scroll;
   padding: 10px;
   z-index: 1;
+}
+form {
   .row {
     input{
       margin: 0 10px;
@@ -77,4 +80,17 @@ form {
 
 .error{
   color: red;
+}
+
+ul{
+  list-style-type: none;
+  font: 25px $title-font;
+  color: $main-text-color;
+  padding: 20px;
+  ul{
+    list-style-type: disc;
+    font: 25px $number-font;
+    color: $main-text-color;
+    text-align: left;
+  }
 }

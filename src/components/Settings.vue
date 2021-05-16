@@ -1,7 +1,7 @@
 <template>
 <div class="settings">
   <span @click="toggleVisibility">&#9881;</span>
-  <form v-if="visible" id="settingsForm" action="#" @submit="checkForm">
+  <form v-if="visible" id="settingsForm" action="#" @submit="checkForm" class="fixed-full-page">
     <div class="container">
       <h3>Настройки <span class="close" @click="toggleVisibility">&#x2715;</span></h3>
       <div class="row center">

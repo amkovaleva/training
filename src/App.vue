@@ -2,7 +2,7 @@
   <div id="app">
     <nav>
       <div class="container">
-        <h1>Научись быстро считать!<Settings></Settings></h1>
+        <h1><Info></Info><Settings></Settings> Научись быстро считать!</h1>
       </div>
     </nav>
 
@@ -20,6 +20,7 @@
 import Training from "./components/Training";
 import './assets/styles/stylesheet.css';
 import Settings from "@/components/Settings";
+import Info from "@/components/Info";
 
 export default {
   name: 'App',
@@ -43,6 +44,7 @@ export default {
     }
   },
   components: {
+    Info,
     Settings,
     Training
   }
