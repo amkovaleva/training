@@ -1,17 +1,24 @@
 class TaskGenerator{
 
+    _state = 0;
+    _type = 1; // 1 - yes/No; 2-get Answer
+
+    _operations = ['+', '-', '*', '/'];
+    _states = {new:0, correct: 1, error: 2};
+
+    _max = 10;
+    _min = 1;
+
     _number1 = 1;
     _number2 = 1;
     _operation = -1;
     _result = 0;
-    _correctResult = 0;
-    _max = 10;
-    _min = 1;
-    _isEquationRight = true;
-    _state = 0;
 
-    _operations = ['+', '-', '*', '/'];
-    _states = {new:0, correct: 1, error: 2};
+
+    _correctResult = 0;
+    _isEquationRight = true;
+
+    _partWhatSkip = 0;
 
     constructor(min, max) {
        this._min = min;
@@ -19,8 +26,20 @@ class TaskGenerator{
        this.generate();
     }
 
+    changeType(val){
+        this._type = val;
+    }
+
     get equation(){
-        return `${this._number1} ${this._operations[this._operation]} ${this._number2} = ${this._result}`
+        if(this.isYesNoType)
+            return `${this._number1} ${this._operations[this._operation]} ${this._number2} = ${this._result} ?`;
+
+        if(this._partWhatSkip === 0)
+            return ` ? ${this._operations[this._operation]} ${this._number2} = ${this._correctResult}`;
+        if(this._partWhatSkip === 1)
+            return `${this._number1} ${this._operations[this._operation]}  ? = ${this._correctResult}`;
+
+        return `${this._number1} ${this._operations[this._operation]} ${this._number2} = ?`;
     }
 
     get correctEquation(){
@@ -39,6 +58,9 @@ class TaskGenerator{
         return this._state === this._states.new;
     }
 
+    get isYesNoType(){
+        return this._type === 1;
+    }
 
     generate(){
         this._state = this._states.new;
@@ -49,11 +71,25 @@ class TaskGenerator{
         this._number2 = this._getRandomIntInclusive();
 
         this._generateRightAnswer();
-        this._makeWrongAnswer();
+
+        if(this.isYesNoType)
+            this._makeWrongAnswer();
+        else
+            this._makeSkipPart();
     }
 
     checkAnswer(givenAnswer){
-        let isCorrect = givenAnswer === this._isEquationRight;
+        let isCorrect = false;
+        if(this.isYesNoType)
+            isCorrect = givenAnswer === this._isEquationRight;
+        else if(this._partWhatSkip === 0)
+            isCorrect = givenAnswer == this._number1;
+        else if(this._partWhatSkip === 1)
+            isCorrect = givenAnswer == this._number2;
+        else
+            isCorrect = givenAnswer == this._result;
+
+
         this._state = (isCorrect) ? this._states.correct : this._states.error;
         return isCorrect;
     }
@@ -89,6 +125,10 @@ class TaskGenerator{
             }
         }
         this._correctResult = this._result;
+    }
+
+    _makeSkipPart(){
+        this._partWhatSkip = this._getRandomIntInclusive(3) % 3;
     }
 
     _makeWrongAnswer(){
@@ -147,7 +187,6 @@ class TaskGenerator{
     _makeWrongAnswerFor3(randomInfo){
         this._makeWrongAnswerFor2(randomInfo);
     }
-
 }
 
 export default TaskGenerator;

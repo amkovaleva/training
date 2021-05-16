@@ -1,10 +1,10 @@
 <template>
   <div>
     <h2>
-      <span  :class="`state${state}`">{{ equation }} ?</span>
+      <span  :class="`state${state}`">{{ equation }}</span>
       <span v-show="isErrorState">{{ correctEquation }}</span>
     </h2>
-    <Answer @answer-to-check="checkAnswer" :needed-answer="isNewState && !isOnPause"></Answer>
+    <Answer @answer-to-check="checkAnswer" :needed-answer="isNewState && !isOnPause" :type="type"></Answer>
     <Sound id="wrongAudio" src="/sounds/error.mp3" ref="WrongAudio"></Sound>
     <Sound id="rightAudio" src="/sounds/ok.mp3" ref="RightAudio"></Sound>
   </div>
@@ -19,7 +19,7 @@ let taskGenerator = new TaskGenerator(1, 10);
 export default {
   name: "Task",
   components: {Sound, Answer},
-  props: ['isOnPause'],
+  props: ['isOnPause', 'type'],
   data() {
     return {
       taskGenerator: taskGenerator,
@@ -69,6 +69,14 @@ export default {
       setTimeout(()=> {this.$emit('answer-checked', isCorrect); this.generateTask();},
           isCorrect ? this.correctTime:  this.errorTime);
     }
+  },
+  watch:{
+    type: function (val){
+      this.taskGenerator.changeType(val);
+    }
+  },
+  mounted() {
+    this.taskGenerator.changeType(this.type);
   }
 }
 </script>

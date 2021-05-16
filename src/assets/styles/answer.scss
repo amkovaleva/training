@@ -18,13 +18,31 @@
       vertical-align: middle;
     }
   }
-  &.disabled{
-    .btn{
+}
+
+.full-answer{
+  text-align: center;
+  span{
+    font: 25px/30px $number-font;
+    color: $main-text-color;
+    font-weight: bold;
+    margin: 5px 10px;
+    display: inline-block;
+    padding: 5px 15px;
+  }
+  input{
+    padding: 5px;
+    border-radius: 5px;
+    font: 25px/30px $number-font;
+    color: $main-text-color;
+  }
+}
+.disabled{
+  .btn{
+    opacity: .5;
+    &:hover{
+      cursor: default;
       opacity: .5;
-      &:hover{
-        cursor: default;
-        opacity: .5;
-      }
     }
   }
 }

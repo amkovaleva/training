@@ -23,7 +23,7 @@
 
     <div class="question" v-show="isStarted">
       <Task @answer-checked="collectAnswer"
-            :is-on-pause="isOnPause"></Task>
+            :is-on-pause="isOnPause" :type="type"></Task>
     </div>
   </div>
 </template>
@@ -37,6 +37,7 @@ import Intro from "@/components/Intro";
 export default {
   name: "Training",
   components: {Intro, Summary, Task, Timer},
+  props: ['type'],
   data() {
     return {
       totalAnswers: 0,

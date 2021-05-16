@@ -11,7 +11,7 @@
         <a href="#" @click="selectTraining(trainings.YesNo)"><span>&#x2714; Верно / Неверно</span></a>
         <a href="#" @click="selectTraining(trainings.GiveAnswer)"><span>&#x270F; Дай ответ</span></a>
       </div>
-      <Training v-else @change-training="changeTraining"></Training>
+      <Training v-else @change-training="changeTraining" :type="activeTraining"></Training>
     </div>
   </div>
 </template>
