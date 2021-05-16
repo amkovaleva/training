@@ -30,6 +30,9 @@ form {
       &[type=number], &[type=text]{
         padding: 5px;
         border-radius: 5px;
+        &:invalid{
+          border-color: red;
+        }
       }
       &[type=text]{
         min-width: 60%;
@@ -70,4 +73,8 @@ form {
       }
     }
   }
+}
+
+.error{
+  color: red;
 }

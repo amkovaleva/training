@@ -16,6 +16,7 @@
               :start-value="(isPrepare) ? prepareTime : ((isStarted) ? taskTime : -1)"
               :enebled="isPrepare || isStarted"
               :is-on-pause="isOnPause"
+              :mode="asideMode"
               @timer-ended="stateChanging()"
               @pause-toggle="pauseToggle" ></Timer>
     </aside>

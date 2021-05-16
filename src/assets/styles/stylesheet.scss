@@ -2,6 +2,7 @@
 @import 'timer';
 @import 'training';
 @import 'settings';
+@import 'alert';
 
 @font-face {
   font-family: "Lobster-Regular";
@@ -53,8 +54,8 @@ h3{
   padding-top: 50px;
 }
 
-.main{
-  a{
+.main {
+  a {
     display: block;
     margin: 20px 0;
     padding: 25px;
@@ -62,29 +63,21 @@ h3{
     background: $color-light;
     font: 25px $title-font;
     color: $scd-text-color;
-    span{
-      display: inline-block;
-      &:first-child{
-        font-size: 30px;
-        width: 60%;
-        &:first-letter{
-          padding-right: 35px;
-          font-size: 50px;
-          line-height: 50px;
-          font-weight: bold;
-        }
-      }
-      &:last-child{
-        width: 40%;
-        font: 25px $number-font;
-        color: $main-text-color;
-        text-align: right;
+
+    span {
+      &:first-letter {
+        padding-right: 35px;
+        font-size: 50px;
+        line-height: 50px;
+        font-weight: bold;
       }
     }
-    &:hover{
+
+    &:hover {
       opacity: .9;
       cursor: pointer;
-      span{
+
+      span {
         font-weight: bold;
       }
     }

@@ -8,9 +8,8 @@
 
     <div class="container">
       <div class="main" v-if="!trainingSelected">
-        <a href="#" @click="selectTraining(trainings.YesNo)"><span>&#x2714; Проверь себя: </span><span>Верно / Неверно</span></a>
-        <a href="#" @click="selectTraining(trainings.GiveAnswer)"><span>&#x270F; Опять проверь себя: </span><span>Дай ответ</span></a>
-        <a href="#" @click="selectTraining(trainings.Extra)"><span>&#x265B; Тренируй себя: </span><span>Что скрывается под ?</span></a>
+        <a href="#" @click="selectTraining(trainings.YesNo)"><span>&#x2714; Верно / Неверно</span></a>
+        <a href="#" @click="selectTraining(trainings.GiveAnswer)"><span>&#x270F; Дай ответ</span></a>
       </div>
       <Training v-else @change-training="changeTraining"></Training>
     </div>
@@ -27,7 +26,7 @@ export default {
   data(){
     return {
       activeTraining: 0,
-      trainings: {None: 0, YesNo: 1, GiveAnswer: 2, Extra: 3}
+      trainings: {None: 0, YesNo: 1, GiveAnswer: 2}
     }
   },
   computed:{

@@ -10,7 +10,7 @@ import Sound from "@/components/Soound";
 export default {
   name: "Timer",
   components: {Sound},
-  props: ['startValue', 'isOnPause'],
+  props: ['startValue', 'isOnPause', 'mode'],
   data: function () {
     return {
       counter: 0,
