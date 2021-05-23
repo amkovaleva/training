@@ -4,10 +4,6 @@
   <form v-if="visible" id="settingsForm" action="#" @submit="checkForm" class="fixed-full-page">
     <div class="container">
       <h3>Настройки <span class="close" @click="toggleVisibility">&#x2715;</span></h3>
-      <div class="row center">
-        <label for="name"> Имя:</label>
-        <input type="text" id="name" v-model="settings.name">
-      </div>
       <div v-if="!valid" class="info error">
               Заполните, пожалуйста, поля ввода.
       </div>
@@ -67,7 +63,6 @@ export default {
       valid: true,
       popUpVisible: false,
       settings: {
-        name: null,
         time: {
           prepare: 3,
           training: 90,
@@ -96,13 +91,18 @@ export default {
     save(){
       if(!this.validateForm())
         return false;
+
       window.settings = this.settings;
       localStorage.setItem("settings", JSON.stringify(this.settings));
       this.toggleVisibility();
       return true;
     },
     resetChanges(){
-      let data = JSON.parse(localStorage.getItem("settings"));
+      let item = localStorage.getItem("settings"),
+          data = null;
+      if(item)
+        data = JSON.parse(item);
+
       if (data)
         this.settings = data;
       window.settings = this.settings;

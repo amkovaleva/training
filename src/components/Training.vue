@@ -4,7 +4,10 @@
     <div class="info" v-show="isInactive || isFinished">
       <Intro v-if="isInactive" :task-time="taskTime"></Intro>
       <Summary v-show="isFinished" :correct-answers="correctAnswers" :total-answers="totalAnswers"></Summary>
-      <span class="btn" @click="stateChanging()">Начать{{ (isFinished) ? ' заново' : '' }}</span>
+      <div class="buttons">
+        <span class="btn" @click="back">&#129120; Вернуться</span>
+        <span class="btn" @click="stateChanging()">Начать{{ (isFinished) ? ' заново' : '' }}</span>
+      </div>
     </div>
 
 
@@ -29,6 +32,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import Task from "./Task";
 import Timer from "./Timer";
 import Summary from "@/components/Summary";
@@ -48,15 +52,15 @@ export default {
     }
   },
   computed: {
-    asideMode(){
+    asideMode() {
       return this.isPrepare ? 'big' : 'small'
     },
-    prepareTime(){
-        return (window.settings) ? window.settings.time.prepare: 3;
-      },
-    taskTime(){
-        return (window.settings) ? window.settings.time.training: 90;
-      },
+    prepareTime() {
+      return (window.settings) ? window.settings.time.prepare : 3;
+    },
+    taskTime() {
+      return (window.settings) ? window.settings.time.training : 90;
+    },
     isInactive() {
       return this.state === this.states.inactive
     },
@@ -82,14 +86,17 @@ export default {
       if (this.isPrepare)
         this.prepareForTraining();
 
+      if (this.isFinished)
+        this.collectTraining();
+
     },
-    pauseToggle(){
+    pauseToggle() {
       this.isOnPause = !this.isOnPause;
     },
-    reload(){
+    reload() {
       this.stateChanging(3);
     },
-    back(){
+    back() {
       this.state = 0;
       this.$emit('change-training');
     },
@@ -102,6 +109,16 @@ export default {
       this.totalAnswers = 0;
       this.correctAnswers = 0;
       this.isOnPause = false;
+    },
+    collectTraining() {
+      if (this.totalAnswers)
+        Vue.prototype.$trainingCollector.collect({
+          n: 1,
+          t: this.taskTime,
+          an: this.totalAnswers,
+          cAn: this.correctAnswers,
+          type: this.type - 1
+        });
     }
   }
 }
