@@ -2,7 +2,10 @@
   <div id="app">
     <nav>
       <div class="container">
-        <h1><Info></Info><Settings></Settings> Научись быстро считать!</h1>
+        <h1>
+          <Stat v-show="!trainingSelected"></Stat>
+          <Info  v-show="!trainingSelected"></Info>
+          <Settings  v-show="!trainingSelected"></Settings> Научись быстро считать!</h1>
       </div>
     </nav>
 
@@ -11,7 +14,7 @@
         <a href="#" @click="selectTraining(trainings.YesNo)"><span>&#x2714; Верно / Неверно</span></a>
         <a href="#" @click="selectTraining(trainings.GiveAnswer)"><span>&#x270F; Дай ответ</span></a>
       </div>
-      <Training v-else @change-training="changeTraining" :type="activeTraining"></Training>
+      <Training v-else @change-training="changeTraining" :type="activeTraining" ></Training>
     </div>
   </div>
 </template>
@@ -21,6 +24,7 @@ import Training from "./components/Training";
 import './assets/styles/stylesheet.css';
 import Settings from "@/components/Settings";
 import Info from "@/components/Info";
+import Stat from "@/components/Stat";
 
 export default {
   name: 'App',
@@ -44,6 +48,7 @@ export default {
     }
   },
   components: {
+    Stat,
     Info,
     Settings,
     Training
