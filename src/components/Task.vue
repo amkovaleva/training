@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import TaskGenerator from '@/assets/js/TaskGenerator';
-import Answer from "./Answer";
-import Sound from "@/components/Soound";
+import TaskGenerator from '../assets/js/TaskGenerator';
+import Answer from "./Answer.vue";
+import Sound from "./Soound.vue";
 let taskGenerator = new TaskGenerator(1, 10);
 
 export default {

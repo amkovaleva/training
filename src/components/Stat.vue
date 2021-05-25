@@ -8,23 +8,29 @@
 </template>
 
 <script>
-import Vue from "vue";
-import trainingStat from "@/assets/js/TrainingStat";
+import TrainingStat from "../assets/js/TrainingStat.js";
+
+
 
 export default {
   name: "Stat",
   data(){
     return{
       visible: false,
-      trainingStat: null,
+      trainingStat: null
+    }
+  },
+  inject: {
+    trCollector: {
+      from: 'trainingCollector'
     }
   },
   methods:{
     toggleVisibility() {
       this.visible = !this.visible;
       if(this.visible)
-        this.trainingStat = new trainingStat(Vue.prototype.$trainingCollector.collection);
+        this.trainingStat = new TrainingStat(this.trCollector.collection);
     },
-  }
+  },
 }
 </script>

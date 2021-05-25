@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Sound from "@/components/Soound";
+import Sound from "./Soound.vue";
 export default {
   name: "Timer",
   components: {Sound},

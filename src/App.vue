@@ -1,5 +1,4 @@
 <template>
-  <div id="app">
     <nav>
       <div class="container">
         <h1>
@@ -16,15 +15,15 @@
       </div>
       <Training v-else @change-training="changeTraining" :type="activeTraining" ></Training>
     </div>
-  </div>
 </template>
 
 <script>
-import Training from "./components/Training";
+import Training from "./components/Training.vue";
 import './assets/styles/stylesheet.css';
-import Settings from "@/components/Settings";
-import Info from "@/components/Info";
-import Stat from "@/components/Stat";
+import Settings from "./components/Settings.vue";
+import Info from "./components/Info.vue";
+import Stat from "./components/Stat.vue";
+import TrainingCollector from "./assets/js/TrainingCollector.js";
 
 export default {
   name: 'App',
@@ -47,11 +46,20 @@ export default {
       this.activeTraining = 0;
     }
   },
+  inject: {
+    trCollector: {
+      from: 'trainingCollector'
+    }
+  },
+  mounted() {
+    this.trCollector = new TrainingCollector();
+  },
   components: {
     Stat,
     Info,
     Settings,
-    Training
+    Training,
+    TrainingCollector
   }
 }
 </script>

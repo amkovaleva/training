@@ -53,7 +53,7 @@
 
 <script>
 
-import Alert from "@/components/Alert";
+import Alert from "./Alert.vue";
 export default {
   name: "Settings",
   components: {Alert},

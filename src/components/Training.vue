@@ -32,11 +32,10 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Task from "./Task";
-import Timer from "./Timer";
-import Summary from "@/components/Summary";
-import Intro from "@/components/Intro";
+import Task from "./Task.vue";
+import Timer from "./Timer.vue";
+import Summary from "./Summary.vue";
+import Intro from "./Intro.vue";
 
 export default {
   name: "Training",
@@ -72,6 +71,11 @@ export default {
     },
     isFinished() {
       return this.state === this.states.finished
+    }
+  },
+  inject: {
+    trCollector: {
+      from: 'trainingCollector'
     }
   },
   methods: {
@@ -112,7 +116,7 @@ export default {
     },
     collectTraining() {
       if (this.totalAnswers)
-        Vue.prototype.$trainingCollector.collect({
+        this.trCollector.collect({
           n: 1,
           t: this.taskTime,
           an: this.totalAnswers,
