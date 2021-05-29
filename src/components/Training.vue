@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { inject } from 'vue'
 import Task from "./Task.vue";
 import Timer from "./Timer.vue";
 import Summary from "./Summary.vue";
@@ -73,11 +74,6 @@ export default {
       return this.state === this.states.finished
     }
   },
-  inject: {
-    trCollector: {
-      from: 'trainingCollector'
-    }
-  },
   methods: {
     stateChanging(skipSteps = 1) {
       this.state = (this.state + skipSteps) % 4;
@@ -115,7 +111,7 @@ export default {
       this.isOnPause = false;
     },
     collectTraining() {
-      if (this.totalAnswers)
+      if (this.totalAnswers){
         this.trCollector.collect({
           n: 1,
           t: this.taskTime,
@@ -123,7 +119,12 @@ export default {
           cAn: this.correctAnswers,
           type: this.type - 1
         });
+      }
     }
+  },
+  setup(){
+    const trCollector = inject('trCollector');
+    return {trCollector};
   }
 }
 </script>

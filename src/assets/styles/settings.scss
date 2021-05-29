@@ -27,23 +27,32 @@
   z-index: 1;
 }
 form {
+
+  label{
+    font: 20px $base-font;
+    color: $main-text-color;
+    + input{
+      margin-left: 30px;
+    }
+  }
+
+  input{
+    margin: 0 10px;
+    &[type=number], &[type=text]{
+      padding: 5px;
+      border-radius: 5px;
+      &:invalid{
+        border-color: red;
+      }
+    }
+  }
   .row {
     input{
-      margin: 0 10px;
-      &[type=number], &[type=text]{
-        padding: 5px;
-        border-radius: 5px;
-        &:invalid{
-          border-color: red;
-        }
-      }
       &[type=text]{
         min-width: 60%;
       }
     }
     label{
-      font: 20px $base-font;
-      color: $main-text-color;
       min-width: 60%;
       display: inline-block;
       margin: 10px 0;

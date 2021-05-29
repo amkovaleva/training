@@ -44,6 +44,9 @@ export default {
       this.typedAnswer = '';
     },
     keyupHandler(event) {
+      if(!this.neededAnswer)
+        return;
+
       if(this.isYesNoType){
         if (!this.yesNoKeys.includes(event.key))
           return;
