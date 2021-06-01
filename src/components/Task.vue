@@ -1,12 +1,11 @@
 <template>
-  <div>
-    <h2>
-      <span  :class="`state${state}`">{{ equation }}</span>
-      <span v-show="isErrorState">{{ correctEquation }}</span>
-    </h2>
-    <Answer @answer-to-check="checkAnswer" :needed-answer="isNewState && !isOnPause" :type="type"></Answer>
-    <Sound id="wrongAudio" src="/sounds/error.mp3" ref="WrongAudio"></Sound>
-    <Sound id="rightAudio" src="/sounds/ok.mp3" ref="RightAudio"></Sound>
+  <div class="card text-center">
+    <div class="card-body" :class="`state${state}`">
+      <h2 class="card-title">{{ isErrorState ? correctEquation :equation }}</h2>
+      <Answer @answer-to-check="checkAnswer" :needed-answer="isNewState && !isOnPause" :isYesNoType="isYesNoType"></Answer>
+    </div>
+    <Sound id="wrongAudio" src="/sounds/error.mp3" ref="wrongAudio"></Sound>
+    <Sound id="rightAudio" src="/sounds/ok.mp3" ref="rightAudio"></Sound>
   </div>
 </template>
 
@@ -14,15 +13,14 @@
 import TaskGenerator from '../assets/js/TaskGenerator';
 import Answer from "./Answer.vue";
 import Sound from "./Soound.vue";
-let taskGenerator = new TaskGenerator(1, 10);
+import {ref} from "vue";
 
 export default {
   name: "Task",
   components: {Sound, Answer},
-  props: ['isOnPause', 'type'],
+  props: {isOnPause: Boolean, type: Number},
   data() {
     return {
-      taskGenerator: taskGenerator,
     }
   },
   computed: {
@@ -33,19 +31,32 @@ export default {
       return (window.settings) ? window.settings.time.afterAnswer.wrong: 1000;
     },
     equation() {
+      if(!this.taskGenerator)
+        return '';
       return this.taskGenerator.equation;
     },
     correctEquation() {
+      if(!this.taskGenerator)
+        return '';
       return this.taskGenerator.correctEquation;
     },
     state() {
+      if(!this.taskGenerator)
+        return 0;
       return this.taskGenerator.state;
     },
     isErrorState() {
+      if(!this.taskGenerator)
+        return false;
       return this.taskGenerator.isErrorState;
     },
     isNewState() {
+      if(!this.taskGenerator)
+        return true;
       return this.taskGenerator.isNewState;
+    },
+    isYesNoType() {
+      return this.type === 1;
     },
   },
 
@@ -62,21 +73,23 @@ export default {
 
       let isCorrect = this.taskGenerator.checkAnswer(givenAnswer);
       if(isCorrect)
-        this.$refs.RightAudio.play();
+        this.rightAudio.play();
       else
-        this.$refs.WrongAudio.play();
+        this.wrongAudio.play();
 
       setTimeout(()=> {this.$emit('answer-checked', isCorrect); this.generateTask();},
           isCorrect ? this.correctTime:  this.errorTime);
     }
   },
-  watch:{
-    type: function (val){
-      this.taskGenerator.changeType(val);
-    }
-  },
   mounted() {
-    this.taskGenerator.changeType(this.type);
+    this.taskGenerator = new TaskGenerator(1, 10, this.isYesNoType);
+  },
+
+  setup(){
+    const wrongAudio = ref(null);
+    const rightAudio = ref(null);
+    const taskGenerator = ref(null);
+    return {wrongAudio, rightAudio, taskGenerator};
   }
 }
 </script>

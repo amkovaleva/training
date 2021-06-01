@@ -1,0 +1,52 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+$body-bg: tint-color($purple-100, 80%);
+$light: $purple-100;
+$body-color: $purple-800;
+
+$theme-colors: (
+        "light": $light,
+        "success":       $success,
+        "danger": $danger
+);
+
+
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/type";
+
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+
+@import "bootstrap/scss/transitions";
+
+$navbar-light-color: $dark;
+$navbar-light-brand-color: $blue-800;
+$navbar-light-hover-color: $dark;
+$navbar-light-brand-hover-color: $blue-800;
+$navbar-padding-y: 0;
+$navbar-toggler-focus-width: 0;
+@import "bootstrap/scss/navbar";
+
+$list-group-bg: tint-color($blue-100, 65%);
+@import "bootstrap/scss/list-group";
+
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/alert";
+
+$card-spacer-y: 4rem;
+$card-title-spacer-y: 2rem;
+$card-cap-padding-y: 1rem;
+$card-cap-bg: tint-color($success, 60%);
+@import "bootstrap/scss/card";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/button-group";
+
+@import "bootstrap/scss/helpers/position";
+@import "bootstrap/scss/utilities";
+@import "bootstrap/scss/utilities/api";
+
+
+@import "app";

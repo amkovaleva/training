@@ -16,6 +16,7 @@ export default {
   methods: {
     play(){
       if(this.audioControl){
+        this.audioControl.currentTime = 0;
         this.checkVolume();
         this.audioControl.play();
       }

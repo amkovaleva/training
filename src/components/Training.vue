@@ -1,59 +1,74 @@
 <template>
-  <div class="training-container" >
-
-    <div class="info" v-show="isInactive || isFinished">
-      <Intro v-if="isInactive" :task-time="taskTime"></Intro>
-      <Summary v-show="isFinished" :correct-answers="correctAnswers" :total-answers="totalAnswers"></Summary>
-      <div class="buttons">
-        <span class="btn" @click="back">&#129120; Вернуться</span>
-        <span class="btn" @click="stateChanging()">Начать{{ (isFinished) ? ' заново' : '' }}</span>
+  <div class="row justify-content-center">
+    <div v-show="isInactive || isFinished" class="col">
+      <div class="card text-center mb-5">
+        <h2 class="card-header">
+          Внимание!
+        </h2>
+        <div class="card-body">
+          <h5 class="card-title">{{ infoTitle }}</h5>
+          <p class="card-text mb-5">{{ infoText }}</p>
+          <router-link class="btn btn-light" :to="{ name: 'Home' }" id="homeLink">&#129120; Вернуться</router-link>&nbsp;
+          <a href="#" class="btn btn-success" @click="stateChanging(1)">Начать{{ (isFinished) ? ' заново' : '' }}</a>
+        </div>
       </div>
     </div>
 
-
-    <aside :class="asideMode">
-      <span class="btn" v-show="isStarted" @click="back">&#129120;</span>
-      <span class="btn" v-show="isStarted" @click="reload">&#11118;</span>
-      <span class="btn last" v-show="isStarted" @click="pauseToggle">{{isOnPause ? '⏵︎︎' : '⏸' }}︎</span>
-      <Timer  ref="Timer" v-show="isPrepare || isStarted"
-              :start-value="(isPrepare) ? prepareTime : ((isStarted) ? taskTime : -1)"
-              :enebled="isPrepare || isStarted"
-              :is-on-pause="isOnPause"
-              :mode="asideMode"
-              @timer-ended="stateChanging()"
-              @pause-toggle="pauseToggle" ></Timer>
-    </aside>
-
-    <div class="question" v-show="isStarted">
-      <Task @answer-checked="collectAnswer"
-            :is-on-pause="isOnPause" :type="type"></Task>
+    <div class="btn-toolbar justify-content-center mb-5">
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-outline-success" v-show="isStarted" @click="back">&#129120;</button>
+        <button type="button" class="btn btn-outline-success" v-show="isStarted" @click="stateChanging(3)">&#11118;</button>
+        <button type="button" class="btn btn-outline-success" v-show="isStarted" @click="pauseToggle">
+          {{ isOnPause ? '⏵︎︎' : '⏸' }}
+        </button>
+        <Timer :start-value="(isPrepare) ? prepareTime : ((isStarted) ? taskTime : -1)"
+               :enebled="isPrepare || isStarted"
+               :is-on-pause="isOnPause"
+               :mode="isPrepare ? 'round' : '' "
+               :show="isPrepare || isStarted"
+               @timer-ended="stateChanging(1)"
+               @pause-toggle="pauseToggle"></Timer>
+      </div>
     </div>
+
+    <div class="col-lg-8 mb-5">
+      <Task v-show="isStarted" :type="type * 1" :isOnPause="isOnPause" @answer-checked="collectAnswer"></Task>
+    </div>
+
   </div>
 </template>
 
 <script>
-import { inject } from 'vue'
-import Task from "./Task.vue";
+
 import Timer from "./Timer.vue";
-import Summary from "./Summary.vue";
-import Intro from "./Intro.vue";
+import Task from "./Task.vue";
 
 export default {
   name: "Training",
-  components: {Intro, Summary, Task, Timer},
-  props: ['type'],
+  components: {Task, Timer},
+  props: {type: Number},
   data() {
     return {
       totalAnswers: 0,
       correctAnswers: 0,
       state: 0,
       isOnPause: false,
-      states: {inactive: 0, prepare: 1, started: 2, finished: 3}
+      states: {inactive: 0, prepare: 1, started: 2, finished: 3},
     }
   },
   computed: {
-    asideMode() {
-      return this.isPrepare ? 'big' : 'small'
+    infoText() {
+      if (this.isInactive) {
+        let text = (this.type * 1 === 1) ? `Нужно определить, явряются ли они верными.` : `Нужно найти неизвестное.`;
+
+        text += ` У вас ${this.taskTime} секунд. Удачи!`;
+        return text;
+      }
+      let percent = (!this.totalAnswers) ? 0 : Math.round(this.correctAnswers / this.totalAnswers * 100);
+      return `Вы дали ответ на ${this.totalAnswers} вопросов. Из них ${this.correctAnswers} были верными. Это ${percent}%.`;
+    },
+    infoTitle() {
+      return this.isInactive ? 'Вам будут предложены уравнения.' : 'Ваш результат:';
     },
     prepareTime() {
       return (window.settings) ? window.settings.time.prepare : 3;
@@ -75,56 +90,28 @@ export default {
     }
   },
   methods: {
-    stateChanging(skipSteps = 1) {
+    stateChanging(skipSteps) {
       this.state = (this.state + skipSteps) % 4;
 
-      if (!this.state) {
-        this.stateChanging();
-        return;
+      if (!this.state)
+        this.stateChanging(1);
+      if(this.isStarted) {
+        this.totalAnswers = 0;
+        this.correctAnswers = 0;
       }
-
-      if (this.isPrepare)
-        this.prepareForTraining();
-
-      if (this.isFinished)
-        this.collectTraining();
-
     },
     pauseToggle() {
       this.isOnPause = !this.isOnPause;
     },
-    reload() {
-      this.stateChanging(3);
-    },
     back() {
       this.state = 0;
-      this.$emit('change-training');
+      document.getElementById('homeLink').click();
     },
-    collectAnswer(isCorrectAnswer) {
+    collectAnswer(isCorrect) {
       this.totalAnswers++;
-      if (isCorrectAnswer)
+      if(isCorrect)
         this.correctAnswers++;
     },
-    prepareForTraining() {
-      this.totalAnswers = 0;
-      this.correctAnswers = 0;
-      this.isOnPause = false;
-    },
-    collectTraining() {
-      if (this.totalAnswers){
-        this.trCollector.collect({
-          n: 1,
-          t: this.taskTime,
-          an: this.totalAnswers,
-          cAn: this.correctAnswers,
-          type: this.type - 1
-        });
-      }
-    }
-  },
-  setup(){
-    const trCollector = inject('trCollector');
-    return {trCollector};
   }
 }
 </script>

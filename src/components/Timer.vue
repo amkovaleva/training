@@ -1,25 +1,22 @@
 <template>
-    <span class="count-down btn" @click="popUpPause">
-            {{ (this.isOnPause && this.mode === this.modes.big) ? '⏵'  : counter }}
-      <Sound id="timerAudio" src="/sounds/clock.mp3" ref="TimerAudio" ></Sound>
-    </span>
+
+  <button v-show="show" type="button" class="btn btn-outline-success" :class="`timer-${mode}`" @click="popUpPause">{{ (this.isOnPause && this.mode === 'round') ? '⏵'  : counter }}</button>
+  <Sound id="timerAudio" src="/sounds/clock.mp3" ref="timerAudio" ></Sound>
 </template>
 
 <script>
 import Sound from "./Soound.vue";
+import {ref} from "vue";
+
 export default {
   name: "Timer",
   components: {Sound},
-  props: ['startValue', 'isOnPause', 'mode'],
+  props: {startValue: Number, isOnPause: Boolean, mode: String, show: Boolean},
   data: function () {
     return {
       counter: 0,
       timoutSent: false,
       timeout: 1000,
-      modes: {
-        big: 'big',
-        small: 'small'
-      }
     }
   },
   methods:{
@@ -48,8 +45,8 @@ export default {
       this.$emit('timer-ended');
     },
     makeSound(){
-      if(this.counter <= 3)
-        this.$refs.TimerAudio.play();
+      if(this.counter <= 3 && this.timerAudio)
+        this.timerAudio.play();
     },
     popUpPause(){
       this.$emit('pause-toggle');
@@ -72,8 +69,14 @@ export default {
     }
   },
   mounted() {
-    window.removeEventListener('keyup', this.keyupHandler);
     window.addEventListener('keyup', this.keyupHandler);
+  },
+  beforeUnmount(){
+    window.removeEventListener('keyup', this.keyupHandler);
+  },
+  setup(){
+    const timerAudio = ref(null);
+    return {timerAudio};
   }
 }
 </script>

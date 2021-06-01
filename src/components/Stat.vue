@@ -1,35 +1,58 @@
 <template>
-  <div class="settings">
-    <span @click="toggleVisibility">∿</span>
-    <div v-show="visible" class="fixed-full-page">
-      <h3>Статистика <span class="close" @click="toggleVisibility">&#x2715;</span></h3>
-      <form  class="container">
-        <fieldset>
-          <legend>Показатель</legend>
-          <input type="radio" v-model="infoType" value="0" id="rPer" @change="changeChartParams"><label for="rPer">Процент правильных ответов</label>
-          <input type="radio" v-model="infoType" value="1" id="rSpeed" @change="changeChartParams"><label for="rSpeed">Скорость</label>
-        </fieldset>
-        <fieldset>
-          <legend>Период</legend>
-          <input type="radio" v-model="infoTime" value="0" id="rDay" @change="changeChartParams"><label for="rDay">По дням</label>
-          <input type="radio" v-model="infoTime" value="1" id="rWeek" @change="changeChartParams"><label for="rWeek">По неделям</label>
-          <input type="radio" v-model="infoTime" value="2" id="rMon" @change="changeChartParams"><label for="rMon">По месяцам</label>
-        </fieldset>
-      </form>
-      <vue3-chart-js
-          :type="chart.type"
-          :id="chart.id"
-          :data="chart.data"
-          :options="chart.options"
-          ref="chartRef"
-      ></vue3-chart-js>
+  <div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h2>Статистика</h2>
+        </div>
+        <div class="col-lg-6 mb-4 text-center">
+          <h4 class="mb-4">Показатель</h4>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" v-model="infoType" value="0" id="rPer"
+                   @change="changeChartParams">
+            <label class="form-check-label" for="rPer">Процент правильных ответов</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" v-model="infoType" value="1" id="rSpeed"
+                   @change="changeChartParams">
+            <label class="form-check-label" for="rSpeed">Скорость</label>
+          </div>
+        </div>
+
+        <div class="col-lg-6  mb-4 text-center">
+          <h4 class="mb-4">Период</h4>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" v-model="infoTime" value="0" id="rDay"
+                   @change="changeChartParams">
+            <label class="form-check-label" for="rDay">По дням</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" v-model="infoTime" value="1" id="rWeek"
+                   @change="changeChartParams">
+            <label class="form-check-label" for="rWeek">По неделям</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" v-model="infoTime" value="2" id="rMon"
+                   @change="changeChartParams">
+            <label class="form-check-label" for="rMon">По месяцам</label>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <vue3-chart-js
+        :type="chart.type"
+        :id="chart.id"
+        :data="chart.data"
+        :options="chart.options"
+        ref="chartRef"
+    ></vue3-chart-js>
   </div>
 </template>
 
 <script>
 
-import { inject, ref } from 'vue'
+import {inject, ref} from 'vue'
 import TrainingStat from "../assets/js/TrainingStat.js";
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import zoomPlugin from 'chartjs-plugin-zoom'
@@ -39,22 +62,18 @@ Vue3ChartJs.registerGlobalPlugins([zoomPlugin])
 export default {
   name: "Stat",
   components: {Vue3ChartJs},
-  data(){
-    return{
-      visible: false,
+  data() {
+    return {
       trainingStat: null,
       infoType: 0,
       infoTime: 0,
       chart: null
     }
   },
-  methods:{
-    toggleVisibility() {
-      this.visible = !this.visible;
-      if (this.visible)
-          this.changeChartParams();
-    },
-    changeChartParams(){
+  methods: {
+    changeChartParams() {
+      if (!this.trCollector)
+        return;
       if (this.trCollector.collection.length !== this.trainingStat.infoCount)
         this.trainingStat = new TrainingStat(this.trCollector.collection, this.infoType, this.infoTime);
 
@@ -64,10 +83,12 @@ export default {
     }
   },
   mounted() {
+    if (!this.trCollector)
+      return;
     this.trainingStat = new TrainingStat(this.trCollector.collection, this.infoType, this.infoTime);
   },
 
-  setup () {
+  setup() {
     const chartRef = ref(null)
     const trCollector = inject('trCollector');
     const chart = {

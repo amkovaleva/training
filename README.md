@@ -1,4 +1,4 @@
-# ariph_train
+# training
 
 ## Project setup
 ```

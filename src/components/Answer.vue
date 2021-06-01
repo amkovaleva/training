@@ -1,15 +1,18 @@
 <template>
-  <div>
-    <div v-if="isYesNoType" class="buttons" :class="neededAnswer ? '' : 'disabled' ">
-      <span class="btn yes" @click="givenAnswer(true)" @keyup.left="givenAnswer(true)"><b>&#8617;</b> Верно</span>
-      <span class="btn no" @click="givenAnswer(false)"
-            @keyup.right="givenAnswer(false)">Не верно <b>&#8618;</b></span>
+  <div class="col">
+    <div v-if="isYesNoType" class="row justify-content-center" :class="neededAnswer ? '' : 'disabled' ">
+      <div class="col-md-6 col-lg-4 mb-3">
+        <span class="btn btn-success full-width" @click="givenAnswer(true)" @keyup.left="givenAnswer(true)"><b>&#8617;</b> Верно</span>
+      </div>
+      <div class="col-md-6 col-lg-4">
+      <span class="btn btn-danger full-width" @click="givenAnswer(false)" @keyup.right="givenAnswer(false)">Не верно <b>&#8618;</b></span>
+      </div>
     </div>
-    <div v-else class="full-answer" :class="neededAnswer ? '' : 'disabled' ">
-        <span>? =</span>
-        <input id="fullAnswerId" v-model="typedAnswer" type="number" min="0" step="1" :disabled="!neededAnswer">
-        <span class="btn" @click="givenAnswer(typedAnswer)">	&#8629;</span>
-        <span class="btn" @click="givenAnswer('')"> Следующий </span>
+    <div v-else class="input-group">
+      <span class="input-group-text">? =</span>
+      <input v-model="typedAnswer" :disabled="!neededAnswer" type="number"
+             id="fullAnswerId"  min="0" step="1" aria-label="First name" class="form-control" >
+      <span class="input-group-text" @click="givenAnswer(typedAnswer)">&#8629; Следующий</span>
     </div>
   </div>
 </template>
@@ -17,7 +20,7 @@
 <script>
 export default {
   name: "Answer",
-  props: ['neededAnswer', 'type'],
+  props: {neededAnswer: Boolean, isYesNoType: Boolean},
   data() {
     return {
       arrowKeys: {
@@ -30,9 +33,6 @@ export default {
   computed: {
     yesNoKeys() {
       return [this.arrowKeys.left, this.arrowKeys.right];
-    },
-    isYesNoType() {
-      return this.type === 1;
     },
   },
   methods:{
@@ -71,8 +71,10 @@ export default {
     }
   },
   mounted() {
-    window.removeEventListener('keyup', this.keyupHandler);
     window.addEventListener('keyup', this.keyupHandler);
+  },
+  beforeUnmount(){
+    window.removeEventListener('keyup', this.keyupHandler);
   }
 
 }
