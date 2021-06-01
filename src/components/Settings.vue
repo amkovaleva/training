@@ -95,48 +95,22 @@ export default {
     return {
       valid: true,
       saved: false,
-
-      settings: {
-        time: {
-          prepare: 3,
-          training: 90,
-          afterAnswer: {
-            right: 500,
-            wrong: 1000,
-          }
-        },
-        sound: {
-          enabled: true,
-          volume: 70,
-        }
-      },
     }
   },
+  inject: ['settings'],
   methods: {
     submitForm(e) {
       e.preventDefault();
 
       if (!this.valid)
         return;
-
-      window.settings = this.settings;
-      localStorage.setItem("settings", JSON.stringify(this.settings));
+      this.$saveSettings(this.settings);
       this.saved = true;
     },
     validateForm() {
       this.valid = (document.getElementById('settingsForm')).checkValidity();
       this.saved = false;
     },
-  },
-  mounted() {
-    let item = localStorage.getItem("settings"),
-        data = null;
-    if (item)
-      data = JSON.parse(item);
-
-    if (data)
-      this.settings = data;
-    window.settings = this.settings;
   }
 }
 </script>

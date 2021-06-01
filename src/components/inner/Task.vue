@@ -25,10 +25,10 @@ export default {
   },
   computed: {
     correctTime(){
-      return (window.settings) ? window.settings.time.afterAnswer.right: 500;
+      return this.$getSetting('time.afterAnswer.right');
     },
     errorTime(){
-      return (window.settings) ? window.settings.time.afterAnswer.wrong: 1000;
+      return this.$getSetting('time.afterAnswer.wrong');
     },
     equation() {
       if(!this.taskGenerator)

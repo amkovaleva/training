@@ -71,10 +71,10 @@ export default {
       return this.isInactive ? 'Вам будут предложены уравнения.' : 'Ваш результат:';
     },
     prepareTime() {
-      return (window.settings) ? window.settings.time.prepare : 3;
+      return this.$getSetting('time.prepare');
     },
     taskTime() {
-      return (window.settings) ? window.settings.time.training : 90;
+      return this.$getSetting('time.training');
     },
     isInactive() {
       return this.state === this.states.inactive
@@ -95,6 +95,7 @@ export default {
 
       if (!this.state)
         this.stateChanging(1);
+
       if(this.isStarted) {
         this.totalAnswers = 0;
         this.correctAnswers = 0;
