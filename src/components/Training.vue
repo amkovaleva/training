@@ -40,8 +40,8 @@
 
 <script>
 
-import Timer from "./Timer.vue";
-import Task from "./Task.vue";
+import Timer from "./inner/Timer.vue";
+import Task from "./inner/Task.vue";
 
 export default {
   name: "Training",

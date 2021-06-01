@@ -88,11 +88,9 @@
 
 <script>
 
-import Alert from "./Alert.vue";
 
 export default {
   name: "Settings",
-  components: {Alert},
   data() {
     return {
       valid: true,

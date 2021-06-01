@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import TaskGenerator from '../assets/js/TaskGenerator';
+import TaskGenerator from '../../assets/js/TaskGenerator';
 import Answer from "./Answer.vue";
 import Sound from "./Soound.vue";
 import {ref} from "vue";
