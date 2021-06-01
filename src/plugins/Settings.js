@@ -16,6 +16,10 @@ export default {
             }, options)
         };
 
+        app.config.globalProperties.$settings = key => {
+            return options;
+        };
+
         app.config.globalProperties.$saveSettings = (settings) => {
             localStorage.setItem("settings", JSON.stringify(settings));
             options = settings;

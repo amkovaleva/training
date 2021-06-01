@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import settingsPlugin from './plugins/Settings'
+import statisticPlugin from './plugins/statistic/Index'
 
 
 const trainingApp = createApp(App);
@@ -22,3 +23,4 @@ trainingApp.use(settingsPlugin, {
     }
 });
 trainingApp.mount('#app')
+trainingApp.use(statisticPlugin, true);

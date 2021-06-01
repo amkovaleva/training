@@ -100,6 +100,12 @@ export default {
         this.totalAnswers = 0;
         this.correctAnswers = 0;
       }
+      if(this.isFinished && this.totalAnswers)
+        this.$collectTraining({
+          isYesNo: this.type == 1,
+          total: this.totalAnswers,
+          correct: this.correctAnswers
+        });
     },
     pauseToggle() {
       this.isOnPause = !this.isOnPause;
