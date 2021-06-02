@@ -14,9 +14,9 @@
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'Info' }">Информация</router-link>
             </li>
-            <!--<li class="nav-item">
+            <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'Stat' }">Статистика</router-link>
-            </li>-->
+            </li>
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'Settings' }">Настройки</router-link>
             </li>

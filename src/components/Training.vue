@@ -119,6 +119,9 @@ export default {
       if(isCorrect)
         this.correctAnswers++;
     },
+  },
+  unmounted() {
+    this.$updateStatData();
   }
 }
 </script>

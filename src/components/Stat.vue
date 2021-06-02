@@ -22,17 +22,17 @@
         <div class="col-lg-6  mb-4 text-center">
           <h4 class="mb-4">Период</h4>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" v-model="infoTime" value="0" id="rDay"
+            <input class="form-check-input" type="radio" v-model="infoTime" value="day" id="rDay"
                    @change="changeChartParams">
             <label class="form-check-label" for="rDay">По дням</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" v-model="infoTime" value="1" id="rWeek"
+            <input class="form-check-input" type="radio" v-model="infoTime" value="week" id="rWeek"
                    @change="changeChartParams">
             <label class="form-check-label" for="rWeek">По неделям</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" v-model="infoTime" value="2" id="rMon"
+            <input class="form-check-input" type="radio" v-model="infoTime" value="month" id="rMon"
                    @change="changeChartParams">
             <label class="form-check-label" for="rMon">По месяцам</label>
           </div>
@@ -52,8 +52,7 @@
 
 <script>
 
-import {inject, ref} from 'vue'
-import TrainingStat from "../assets/js/TrainingStat.js";
+import {ref} from 'vue'
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import zoomPlugin from 'chartjs-plugin-zoom'
 
@@ -64,33 +63,21 @@ export default {
   components: {Vue3ChartJs},
   data() {
     return {
-      trainingStat: null,
       infoType: 0,
-      infoTime: 0,
-      chart: null
+      infoTime: 'day'
     }
   },
   methods: {
     changeChartParams() {
-      if (!this.trCollector)
-        return;
-      if (this.trCollector.collection.length !== this.trainingStat.infoCount)
-        this.trainingStat = new TrainingStat(this.trCollector.collection, this.infoType, this.infoTime);
-
-      let isSpeed = !!(this.infoType * 1),
-          data = this.trainingStat.datasets(isSpeed, this.infoTime * 1)
-      this.updateChart(data, isSpeed);
+      this.updateChart(this.$getStatData(this.infoTime, this.infoType == 1), this.infoType == 1);
     }
   },
   mounted() {
-    if (!this.trCollector)
-      return;
-    this.trainingStat = new TrainingStat(this.trCollector.collection, this.infoType, this.infoTime);
+    this.changeChartParams();
   },
 
   setup() {
     const chartRef = ref(null)
-    const trCollector = inject('trCollector');
     const chart = {
       type: 'bar',
       id: 'statistic',
@@ -128,14 +115,11 @@ export default {
       chart.data.datasets = data.datasets;
       chart.options.plugins.title.text = isSpeed ? 'Скорость ответа на вопросы (вопрос/сек.)' : 'Процент правильных ответов';
 
-      /*console.log(chart.data.labels);
-      console.log(chart.data.datasets);*/
       chartRef.value.update(250)
     }
 
     return {
       chart,
-      trCollector,
       updateChart,
       chartRef
     }

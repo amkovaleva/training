@@ -23,4 +23,4 @@ trainingApp.use(settingsPlugin, {
     }
 });
 trainingApp.mount('#app')
-trainingApp.use(statisticPlugin, true);
+trainingApp.use(statisticPlugin, false);
