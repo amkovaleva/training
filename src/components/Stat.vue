@@ -8,12 +8,12 @@
         <div class="col-lg-6 mb-4 text-center">
           <h4 class="mb-4">Показатель</h4>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" v-model="infoType" value="0" id="rPer"
+            <input id="rPer" v-model="infoType" class="form-check-input" type="radio" value="0"
                    @change="changeChartParams">
             <label class="form-check-label" for="rPer">Процент правильных ответов</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" v-model="infoType" value="1" id="rSpeed"
+            <input id="rSpeed" v-model="infoType" class="form-check-input" type="radio" value="1"
                    @change="changeChartParams">
             <label class="form-check-label" for="rSpeed">Скорость</label>
           </div>
@@ -22,17 +22,17 @@
         <div class="col-lg-6  mb-4 text-center">
           <h4 class="mb-4">Период</h4>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" v-model="infoTime" value="day" id="rDay"
+            <input id="rDay" v-model="infoTime" class="form-check-input" type="radio" value="day"
                    @change="changeChartParams">
             <label class="form-check-label" for="rDay">По дням</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" v-model="infoTime" value="week" id="rWeek"
+            <input id="rWeek" v-model="infoTime" class="form-check-input" type="radio" value="week"
                    @change="changeChartParams">
             <label class="form-check-label" for="rWeek">По неделям</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" v-model="infoTime" value="month" id="rMon"
+            <input id="rMon" v-model="infoTime" class="form-check-input" type="radio" value="month"
                    @change="changeChartParams">
             <label class="form-check-label" for="rMon">По месяцам</label>
           </div>
@@ -41,11 +41,11 @@
     </div>
 
     <vue3-chart-js
-        :type="chart.type"
         :id="chart.id"
+        ref="chartRef"
         :data="chart.data"
         :options="chart.options"
-        ref="chartRef"
+        :type="chart.type"
     ></vue3-chart-js>
   </div>
 </template>
@@ -69,7 +69,8 @@ export default {
   },
   methods: {
     changeChartParams() {
-      this.updateChart(this.$getStatData(this.infoTime, this.infoType == 1), this.infoType == 1);
+      let isSpeed = Number(this.infoType) === 1;
+      this.updateChart(this.$getStatData(this.infoTime, isSpeed), isSpeed);
     }
   },
   mounted() {

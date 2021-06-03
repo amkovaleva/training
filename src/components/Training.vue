@@ -8,31 +8,32 @@
         <div class="card-body">
           <h5 class="card-title">{{ infoTitle }}</h5>
           <p class="card-text mb-5">{{ infoText }}</p>
-          <router-link class="btn btn-light" :to="{ name: 'Home' }" id="homeLink">&#129120; Вернуться</router-link>&nbsp;
-          <a href="#" class="btn btn-success" @click="stateChanging(1)">Начать{{ (isFinished) ? ' заново' : '' }}</a>
+          <router-link id="homeLink" :to="{ name: 'Home' }" class="btn btn-light">&#129120; Вернуться</router-link>&nbsp;
+          <a class="btn btn-success" href="#" @click="stateChanging(1)">Начать{{ (isFinished) ? ' заново' : '' }}</a>
         </div>
       </div>
     </div>
 
     <div class="btn-toolbar justify-content-center mb-5">
       <div class="btn-group" role="group">
-        <button type="button" class="btn btn-outline-success" v-show="isStarted" @click="back">&#129120;</button>
-        <button type="button" class="btn btn-outline-success" v-show="isStarted" @click="stateChanging(3)">&#11118;</button>
-        <button type="button" class="btn btn-outline-success" v-show="isStarted" @click="pauseToggle">
+        <button v-show="isStarted" class="btn btn-outline-success" type="button" @click="back">&#129120;</button>
+        <button v-show="isStarted" class="btn btn-outline-success" type="button" @click="stateChanging(3)">&#11118;
+        </button>
+        <button v-show="isStarted" class="btn btn-outline-success" type="button" @click="pauseToggle">
           {{ isOnPause ? '⏵︎︎' : '⏸' }}
         </button>
-        <Timer :start-value="(isPrepare) ? prepareTime : ((isStarted) ? taskTime : -1)"
-               :enebled="isPrepare || isStarted"
+        <Timer :enebled="isPrepare || isStarted"
                :is-on-pause="isOnPause"
                :mode="isPrepare ? 'round' : '' "
                :show="isPrepare || isStarted"
+               :start-value="(isPrepare) ? prepareTime : ((isStarted) ? taskTime : -1)"
                @timer-ended="stateChanging(1)"
                @pause-toggle="pauseToggle"></Timer>
       </div>
     </div>
 
     <div class="col-lg-8 mb-5">
-      <Task v-show="isStarted" :type="type * 1" :isOnPause="isOnPause" @answer-checked="collectAnswer"></Task>
+      <Task v-show="isStarted" :isOnPause="isOnPause" :type="Number(type)" @answer-checked="collectAnswer"></Task>
     </div>
 
   </div>
@@ -57,9 +58,12 @@ export default {
     }
   },
   computed: {
+    isYesNoType() {
+      return Number(this.type) === 1;
+    },
     infoText() {
       if (this.isInactive) {
-        let text = (this.type * 1 === 1) ? `Нужно определить, явряются ли они верными.` : `Нужно найти неизвестное.`;
+        let text = this.isYesNoType ? `Нужно определить, явряются ли они верными.` : `Нужно найти неизвестное.`;
 
         text += ` У вас ${this.taskTime} секунд. Удачи!`;
         return text;
@@ -96,13 +100,13 @@ export default {
       if (!this.state)
         this.stateChanging(1);
 
-      if(this.isStarted) {
+      if (this.isStarted) {
         this.totalAnswers = 0;
         this.correctAnswers = 0;
       }
-      if(this.isFinished && this.totalAnswers)
+      if (this.isFinished && this.totalAnswers)
         this.$collectTraining({
-          isYesNo: this.type == 1,
+          isYesNo: this.isYesNoType,
           total: this.totalAnswers,
           correct: this.correctAnswers
         });
@@ -116,7 +120,7 @@ export default {
     },
     collectAnswer(isCorrect) {
       this.totalAnswers++;
-      if(isCorrect)
+      if (isCorrect)
         this.correctAnswers++;
     },
   },

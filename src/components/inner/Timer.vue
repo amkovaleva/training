@@ -1,7 +1,9 @@
 <template>
 
-  <button v-show="show" type="button" class="btn btn-outline-success" :class="`timer-${mode}`" @click="popUpPause">{{ (this.isOnPause && this.mode === 'round') ? '⏵'  : counter }}</button>
-  <Sound id="timerAudio" src="/sounds/clock.mp3" ref="timerAudio" ></Sound>
+  <button v-show="show" :class="`timer-${mode}`" class="btn btn-outline-success" type="button" @click="popUpPause">
+    {{ (this.isOnPause && this.mode === 'round') ? '⏵' : counter }}
+  </button>
+  <Sound id="timerAudio" ref="timerAudio" src="/sounds/clock.mp3"></Sound>
 </template>
 
 <script>
@@ -19,20 +21,20 @@ export default {
       timeout: 1000,
     }
   },
-  methods:{
-    sendTimeout(handler){
+  methods: {
+    sendTimeout(handler) {
       setTimeout(handler, this.timeout);
       this.timoutSent = true;
     },
     startTimer() {
       this.counter = this.startValue;
-      if(this.timoutSent)
+      if (this.timoutSent)
         return;
       this.makeSound();
       this.sendTimeout(this.countDown)
     },
     countDown() {
-      if(this.startValue < 0 || this.isOnPause || this.counter <=0)
+      if (this.startValue < 0 || this.isOnPause || this.counter <= 0)
         return;
 
       this.counter--;
@@ -44,11 +46,11 @@ export default {
       this.makeSound();
       this.$emit('timer-ended');
     },
-    makeSound(){
-      if(this.counter <= 3 && this.timerAudio)
+    makeSound() {
+      if (this.counter <= 3 && this.timerAudio)
         this.timerAudio.play();
     },
-    popUpPause(){
+    popUpPause() {
       this.$emit('pause-toggle');
     },
     keyupHandler(event) {
@@ -58,23 +60,23 @@ export default {
     }
   },
   watch: {
-    startValue: function(newVal, oldVal) {
-      if(newVal === -1  || newVal === oldVal)
+    startValue: function (newVal, oldVal) {
+      if (newVal === -1 || newVal === oldVal)
         return;
       this.startTimer();
     },
-    isOnPause: function (newVal){
-      if(!newVal)
+    isOnPause: function (newVal) {
+      if (!newVal)
         this.countDown();
     }
   },
   mounted() {
     window.addEventListener('keyup', this.keyupHandler);
   },
-  beforeUnmount(){
+  beforeUnmount() {
     window.removeEventListener('keyup', this.keyupHandler);
   },
-  setup(){
+  setup() {
     const timerAudio = ref(null);
     return {timerAudio};
   }

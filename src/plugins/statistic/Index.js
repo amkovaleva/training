@@ -8,12 +8,16 @@ export default {
             statData = Helper.generateStatInfo(trainings);
         /*
         *
-        * info = {
-        *   isYesNo: this.type == 1,
-        *   total: this.totalAnswers,
-        *   correct: this.correctAnswers
-        * }
+        *
         * */
+        /**
+         * Добавляет  результат тренировки к уже существующим и сохраняет в localStorage
+         * @param info = {
+         *   isYesNo:  - Выполняется ли тренировка Верно / Неверно
+         *   total: - Общее число ответов
+         *   correct:  - число правильных ответов
+         * }
+         */
         app.config.globalProperties.$collectTraining = info => {
 
             let day = Helper.dateCode(),
@@ -31,10 +35,19 @@ export default {
             localStorage.setItem(Helper.TRAININGS_STORAGE_NAME, JSON.stringify(Object.fromEntries(trainings)));
         };
 
+        /**
+         * Обновляется / Генерируется информация для статичтики (диаграмм)
+         */
         app.config.globalProperties.$updateStatData = () => {
             statData = Helper.generateStatInfo(trainings);
         };
 
+        /**
+         *
+         * @param period:  'day', 'week',  'month' - Минимальный период времени для статистики (1 элемента диаграммы).
+         * @param isSpeed - Нужна статискика по скорости ответов
+         * @returns {labels : [], datasets: []}  - Информация для диаграммы: labels для точек на Ох, datasets из 3-х объектов для Оу.
+         */
         app.config.globalProperties.$getStatData = (period, isSpeed) => {
             let stat = statData[period];
             return {
@@ -42,7 +55,7 @@ export default {
                 datasets: [
                     {
                         label: 'Верно/Неверно',
-                        data:  isSpeed ? stat.speedStat[0] : stat.correctStat[0],
+                        data: isSpeed ? stat.speedStat[0] : stat.correctStat[0],
                         borderColor: 'green',
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         cubicInterpolationMode: 'monotone',
@@ -50,7 +63,7 @@ export default {
                     },
                     {
                         label: 'Дай ответ',
-                        data:  isSpeed ? stat.speedStat[1] : stat.correctStat[1],
+                        data: isSpeed ? stat.speedStat[1] : stat.correctStat[1],
                         borderColor: 'blue',
                         backgroundColor: 'rgba(153, 102, 255, 0.2)',
                         cubicInterpolationMode: 'monotone',
@@ -58,7 +71,7 @@ export default {
                     },
                     {
                         label: 'В среднем',
-                        data:  isSpeed ? stat.speedStat[2] : stat.correctStat[2],
+                        data: isSpeed ? stat.speedStat[2] : stat.correctStat[2],
                         borderColor: 'red',
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         cubicInterpolationMode: 'monotone',

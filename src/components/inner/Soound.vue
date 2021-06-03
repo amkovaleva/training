@@ -8,14 +8,14 @@
 export default {
   name: "Sound",
   props: ['id', 'src'],
-  data(){
+  data() {
     return {
       audioControl: null,
     }
   },
   methods: {
-    play(){
-      if(this.audioControl){
+    play() {
+      if (this.audioControl) {
         this.audioControl.currentTime = 0;
         this.audioControl.play();
       }
@@ -26,7 +26,7 @@ export default {
         enabled = this.$getSetting('sound.enabled');
 
     this.audioControl = document.getElementById(this.id);
-    this.audioControl.volume = vol/100;
+    this.audioControl.volume = vol / 100;
     this.audioControl.muted = !enabled;
   }
 }

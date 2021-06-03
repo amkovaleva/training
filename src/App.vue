@@ -2,30 +2,31 @@
   <div>
     <nav class="navbar navbar-expand-md  fixed-top navbar-light bg-light">
       <div class="container-lg">
-        <router-link class="navbar-brand" :to="{ name: 'Home' }">Научись быстро считать!</router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <router-link :to="{ name: 'Home' }" class="navbar-brand">Научись быстро считать!</router-link>
+        <button aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-bs-target="#navbarText" data-bs-toggle="collapse" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarText">
+        <div id="navbarText" class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'Home' }">Главная</router-link>
+              <router-link :to="{ name: 'Home' }" class="nav-link">Главная</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'Info' }">Информация</router-link>
+              <router-link :to="{ name: 'Info' }" class="nav-link">Информация</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'Stat' }">Статистика</router-link>
+              <router-link :to="{ name: 'Stat' }" class="nav-link">Статистика</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'Settings' }">Настройки</router-link>
+              <router-link :to="{ name: 'Settings' }" class="nav-link">Настройки</router-link>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <div class="main" :class="isFullPage ? '' : 'container'">
+    <div :class="isFullPage ? '' : 'container'" class="main">
       <router-view></router-view>
     </div>
   </div>
@@ -43,13 +44,17 @@ import {computed} from "vue";
 export default {
   name: 'App',
 
-  setup(){
+  setup() {
     const route = useRoute();
-    const routeName = computed(() =>route.name)
+    const routeName = computed(() => route.name)
     return {routeName}
   },
-  computed:{
-    isFullPage(){
+  computed: {
+    /**
+     * Определяет, должен ли router-view отображен на всю ширину или обернут в  container
+     * @returns {boolean}
+     */
+    isFullPage() {
       return this.routeName === 'Stat';
     }
   }

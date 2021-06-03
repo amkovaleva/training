@@ -4,82 +4,97 @@
 }
 
 :root {
-  --bs-font-sans-serif: "Marmelad-Regular",  Arial,  "Helvetica Neue", "Segoe UI", "Noto Sans",  sans-serif;
+  --bs-font-sans-serif: "Marmelad-Regular", Arial, "Helvetica Neue", "Segoe UI", "Noto Sans", sans-serif;
 }
 
 $separator-color: tint-color($dark, 65%);
 
 @include media-breakpoint-up(lg) {
-  .navbar-brand{
+  .navbar-brand {
     border-right: 1px solid $separator-color;
     padding-right: 1.5rem;
   }
 }
-h2{
+
+h2 {
   font-weight: bold;
 }
-h3{
+
+h3 {
   margin: 1rem 0;
 }
-h4{
+
+h4 {
   text-decoration: underline;
 }
 
-nav{
+nav {
   border-bottom: 1px solid $separator-color;
   font-weight: bold;
-  .nav-item{
+
+  .nav-item {
     padding: 0 0.75rem;
   }
 }
-.list-group-item{
+
+.list-group-item {
   border-left: 3px solid $blue-300;
 }
-.main{
+
+.main {
   margin-top: 5rem;
 }
-.full-width{
+
+.full-width {
   width: 100%;
 }
-.btn-group{
-  button:last-of-type{
+
+.btn-group {
+  button:last-of-type {
     border-top-right-radius: 0.25rem !important;
     border-bottom-right-radius: 0.25rem !important;
-    &.timer-round{
+
+    &.timer-round {
       border-radius: 8rem !important;
     }
   }
-  button:first-of-type{
+
+  button:first-of-type {
     border-top-left-radius: 0.25rem !important;
     border-bottom-left-radius: 0.25rem !important;
   }
 }
-.timer-round{
+
+.timer-round {
   font-size: 8rem;
   margin-top: 5 * $spacer;
   padding: 0 4 * $spacer;
 }
 
-.card-title{
+.card-title {
   font-weight: bold;
   transition: all ease-out .3s;
 }
-.state1{
-  .card-title{
+
+.state1 {
+  .card-title {
     color: $success;
   }
 }
-.state2{
-  .card-title{
+
+.state2 {
+  .card-title {
     color: $danger;
     text-decoration: underline;
   }
 }
-.state1, .state2{
-  .card-title{
+
+.state1, .state2 {
+  .card-title {
     transform: scale(1.2);
   }
 }
-canvas{
+
+canvas {
   margin: 50px;
 }

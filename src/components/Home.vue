@@ -8,7 +8,7 @@
         <div class="card-body">
           <h5 class="card-title">Верно/Неверно</h5>
           <p class="card-text">Определи, верно ли указанное выражение?</p>
-          <router-link class="btn btn-success" :to="{ name: 'Training',  params: {type: 1 }}">Начать</router-link>
+          <router-link :to="{ name: 'Training',  params: {type: 1 }}" class="btn btn-success">Начать</router-link>
         </div>
       </div>
     </div>
@@ -17,7 +17,7 @@
         <div class="card-body">
           <h5 class="card-title">Дай ответ</h5>
           <p class="card-text">Введи число, скрывающееся за знаком вопроса.</p>
-          <router-link class="btn btn-success" :to="{ name: 'Training',  params: {type: 2 }}">Начать</router-link>
+          <router-link :to="{ name: 'Training',  params: {type: 2 }}" class="btn btn-success">Начать</router-link>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router'
 import settingsPlugin from './plugins/Settings'
@@ -6,7 +6,6 @@ import statisticPlugin from './plugins/statistic/Index'
 
 
 const trainingApp = createApp(App);
-trainingApp.provide('trainingCollector',  null)
 trainingApp.use(router);
 trainingApp.use(settingsPlugin, {
     time: {
