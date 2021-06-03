@@ -119,7 +119,7 @@ class Helper {
         let mainItems = values.filter(item => item > 0);
         if (!mainItems.length)
             return 0;
-        return Math.round(mainItems.reduce((a, b) => a + b) / mainItems.length);
+        return mainItems.reduce((a, b) => a + b) / mainItems.length;
     }
 
     static _fillStat(statObj, baseStatInfo) {
@@ -156,12 +156,12 @@ class Helper {
             [0, 1].forEach(index => {
                 let isAnExists = periodStat[index].an > 0;
 
-                speed[index] = !isAnExists ? 0 : Math.round(periodStat[index].an / periodStat[index].t);
+                speed[index] = !isAnExists ? 0 :periodStat[index].an / periodStat[index].t;
                 percent[index] = !isAnExists ? 0 : Math.round(periodStat[index].cAn / periodStat[index].an * 100);
             });
 
             speed.push(Helper._avg(speed));
-            percent.push(Helper._avg(percent));
+            percent.push(Math.round(Helper._avg(percent)));
 
             [0, 1, 2].forEach(index => {
                 statObj.speedStat[index].push(speed[index]);

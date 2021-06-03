@@ -88,9 +88,19 @@ export default {
 
       options: {
         plugins: {
+          legend: {
+            labels: {
+              font: {
+                size: 15
+              }
+            }
+          },
           title: {
             display: true,
-            text: ''
+            text: '',
+            font: {
+              size: 23
+            }
           },
           zoom: {
             zoom: {
